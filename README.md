@@ -1,15 +1,15 @@
 # Taxi-Project
 
-#Api google
+# Api google
 
-#Django:
-	#Models:
+# Django:
+	Models:
 		Users
 		Price mile (7 days)
 		Travel (code )
 		History
 
-	#Views:
+	Views:
     Home
 		Login
 		Register
