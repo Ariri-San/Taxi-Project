@@ -11,7 +11,7 @@ class TravelSerializer(serializers.ModelSerializer):
 class CreateTravelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Travel
-        fields = ['id', 'user', 'date', 'date_return', 'origin', 'destination']
+        fields = ['id', 'date', 'date_return', 'origin', 'destination']
 
 
 class HistorySerializer(serializers.ModelSerializer):
