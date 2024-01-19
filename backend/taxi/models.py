@@ -1,11 +1,12 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+# from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 import uuid
 # Create your models here.
 
+
 class PriceMile(models.Model):
-    name = models.CharField(_("Name"), max_length=255)
+    name = models.CharField(max_length=255)
 
 
 class PriceDay(models.Model):
