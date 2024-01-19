@@ -5,14 +5,13 @@
 # Django:
 ##	Models:
 		Users (username, password, email)
-		Price Mile (7 days)
-  Price Day(start, finish, price)
-  Price Cars(type)
+		Price Mile (7 days, name)
+  		Price Day(start, finish, price)
 		Travel (code )
 		History
 
 ##	Views:
-  Home
+		Home
 		Login
 		Register
 		Travel
