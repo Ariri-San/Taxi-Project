@@ -9,7 +9,7 @@ from . import serializers, models
 class TravelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin ,GenericViewSet):
     queryset = models.Travel.objects.all()
     serializer_class = serializers.TravelSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     def get_serializer_class(self):
         if self.request.method == "POST":
@@ -21,4 +21,5 @@ class TravelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin ,GenericViewS
 class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
     queryset = models.History.objects.all()
     serializer_class = serializers.HistorySerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
+
