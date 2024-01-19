@@ -160,15 +160,15 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
 }
 
-# DJOSER = {
-#     'SERIALIZERS': {
-#         'user':'core.serializers.UserSerializer',
-#         'user_create': 'core.serializers.UserCreateSerializer',
-#         'current_user': 'core.serializers.UserSerializer',
-#     }
-# }
+DJOSER = {
+    'SERIALIZERS': {
+        'user':'core.serializers.UserSerializer',
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer',
+    }
+}
 
-# AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = "core.User"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
