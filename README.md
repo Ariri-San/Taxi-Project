@@ -3,7 +3,7 @@
 # Api google
 
 # Django:
-	Models:
+##	Models:
 		Users (username, password, email)
 		Price Mile (7 days)
   Price Day(start, finish, price)
@@ -11,7 +11,7 @@
 		Travel (code )
 		History
 
-	Views:
+##	Views:
   Home
 		Login
 		Register
