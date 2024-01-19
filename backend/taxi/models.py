@@ -37,11 +37,13 @@ class Travel(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETE = 'C'
     PAYMENT_STATUS_FAILED = 'F'
+    
     PAYMENT_STATUS_CHOICES = [
         (PAYMENT_STATUS_PENDING, 'Pending'),
         (PAYMENT_STATUS_COMPLETE, 'Complete'),
         (PAYMENT_STATUS_FAILED, 'Failed')
     ]
+    
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=6, decimal_places=2)
