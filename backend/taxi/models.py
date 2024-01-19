@@ -23,7 +23,7 @@ class JoinedPrice(models.Model):
     (OTHERDAYS, "Otherdays"),
     ]
 
-    day_of_week = models.Choices(max_length=1, choices=DAY_CHOICES)
+    day_of_week = models.CharField(max_length=1, choices=DAY_CHOICES)
     priceday = models.ForeignKey(PriceDay, on_delete=models.CASCADE)
     pricemile = models.ForeignKey(PriceMile, on_delete=models.CASCADE)
 
@@ -48,7 +48,7 @@ class Travel(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     date = models.DateField()
-    date_return = models.DateField()
+    date_return = models.DateField(blank=True, null=True)
     present = models.DateField(auto_now_add=True)
     travel_code = models.UUIDField(unique=True,default=uuid.uuid4, editable=False, max_length=36)
     origin = models.CharField(max_length=511)
