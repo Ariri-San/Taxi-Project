@@ -1,6 +1,3 @@
-# Taxi-Project
-
-# Api google
 
 # Django:
 ## Models:
