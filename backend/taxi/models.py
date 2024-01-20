@@ -56,6 +56,7 @@ class Travel(models.Model):
     destination = models.CharField(max_length=511)
     payment_status = models.CharField(
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
+    
 
 
 class History(models.Model):

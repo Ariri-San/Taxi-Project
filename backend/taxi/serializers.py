@@ -9,6 +9,9 @@ class TravelSerializer(serializers.ModelSerializer):
 
 
 class CreateTravelSerializer(serializers.ModelSerializer):
+    # def create(self, validated_data):
+        
+    
     class Meta:
         model = models.Travel
         fields = ['id', 'date', 'date_return', 'origin', 'destination']
