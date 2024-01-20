@@ -5,12 +5,8 @@ key = "AIzaSyDEnymewL5xuqEqp3baWmzXley4_iUdYdk"
 gmaps = googlemaps.Client(key=key)
 
 
-# Geocoding an address
-geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
-
-
-places = gmaps.places("dsg", region="UK")
+places = gmaps.places("sriling", region="UK")
 
 places_id = [i["place_id"] for i in places["results"]]
 
