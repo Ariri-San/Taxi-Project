@@ -16,12 +16,11 @@ class TravelViewSet(ModelViewSet):
     
     
     def get_serializer_class(self):
-        if self.request.method == "POST":
+        if self.request.method == 'POST':
             return serializers.CreateTravelSerializer
-        elif self.request.method == "PUT":
+        elif self.request.method == 'PUT':
             return serializers.UpdateUserTravelSerializer
-        elif self.request.method == "GET":
-            return serializers.TravelSerializer
+        return serializers.TravelSerializer
 
 
     def get_queryset(self):

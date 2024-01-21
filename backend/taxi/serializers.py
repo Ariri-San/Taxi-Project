@@ -28,7 +28,7 @@ class UpdateUserTravelSerializer(serializers.ModelSerializer):
     #     print(self.kwargs['pk'])    
     class Meta:
         model = models.Travel
-        fields = ['passengers', 'luggage', 'date', 'date_return']        
+        fields = ['id','passengers', 'luggage', 'date', 'date_return']        
 
 
 class HistorySerializer(serializers.ModelSerializer):
