@@ -48,6 +48,8 @@ class Travel(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    passengers = models.PositiveSmallIntegerField(default=1)
+    luggage = models.PositiveSmallIntegerField(default=1)
     date = models.DateField()
     date_return = models.DateField(blank=True, null=True)
     present = models.DateField(auto_now_add=True)
@@ -56,16 +58,18 @@ class Travel(models.Model):
     destination = models.CharField(max_length=511)
     payment_status = models.CharField(
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
-    
+
 
 
 class History(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    passengers = models.PositiveSmallIntegerField(default=1)
+    luggage = models.PositiveSmallIntegerField(default=1)
     date = models.DateField()
     date_return = models.DateField()
     confirmed = models.DateField(auto_now_add=True)
-    travel_code = models.UUIDField(unique=True,default=uuid.uuid4, editable=False, max_length=36)
+    travel_code = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, max_length=36)
     origin = models.CharField(max_length=511)
     destination = models.CharField(max_length=511)
