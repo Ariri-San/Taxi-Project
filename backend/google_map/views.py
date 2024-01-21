@@ -31,7 +31,7 @@ class FindPlace(APIView):
         name_search = serializer.data["name"]
         find_places = gmaps.find_place((name_search + ", UK"), "textquery")
         
-        list_show = ["formatted_address", "name", "photos", "url", "geometry"]
+        list_show = ["formatted_address", "name", "url", "geometry"]
         find_places_2 = []
         for i in find_places["candidates"]:
             place = gmaps.place(i["place_id"])["result"]
