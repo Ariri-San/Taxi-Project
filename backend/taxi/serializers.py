@@ -23,12 +23,17 @@ class UpdateAdminTravelSerializer(serializers.ModelSerializer):
         fields = ['payment_status', 'price', 'date', 'date_return', 'passengers','luggage','origin', 'destination']
 
 class UpdateUserTravelSerializer(serializers.ModelSerializer):
-    # def update(self, instance, validated_data):
-    #     user_id = self.context['request'].user.id
-    #     print(self.kwargs['pk'])    
+    def update(self, instance, validated_data):
+        user_id = self.context['request'].user.id
+        travel = models.Travel.objects.get(id= self.context['view'].kwargs['pk'])
+        print(type(user_id), type(travel.user.id))
+        # if user_id == travel.user.id:
+        #     instance = travel.save()
+        # return instance    
+        # print(self.context['view'].kwargs['pk'])    
     class Meta:
         model = models.Travel
-        fields = ['id','passengers', 'luggage', 'date', 'date_return']        
+        fields = ['passengers', 'luggage', 'date', 'date_return']        
 
 
 class HistorySerializer(serializers.ModelSerializer):
