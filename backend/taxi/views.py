@@ -7,19 +7,19 @@ from . import serializers, models
 
 
 class TravelViewSet(ModelViewSet):
-    serializer_class = serializers.TravelSerializer
+    # serializer_class = serializers.TravelSerializer
     # permission_classes = [IsAuthenticated]
     
     
-    def get_permissions(self):
-        return super().get_permissions()
+    # def get_permissions(self):
+    #     return super().get_permissions()
     
     
     def get_serializer_class(self):
         if self.request.method == "POST":
             return serializers.CreateTravelSerializer
         if self.request.method == "PUT":
-            return serializers.UpdateTravelSerializer
+            return serializers.UpdateUserTravelSerializer
         elif self.request.method == "GET":
             return serializers.TravelSerializer
 

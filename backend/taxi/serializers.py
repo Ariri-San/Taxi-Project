@@ -22,8 +22,10 @@ class UpdateAdminTravelSerializer(serializers.ModelSerializer):
         model = models.Travel
         fields = ['payment_status', 'price', 'date', 'date_return', 'passengers','luggage','origin', 'destination']
 
-
 class UpdateUserTravelSerializer(serializers.ModelSerializer):
+    # def update(self, instance, validated_data):
+    #     user_id = self.context['request'].user.id
+    #     print(self.kwargs['pk'])    
     class Meta:
         model = models.Travel
         fields = ['passengers', 'luggage', 'date', 'date_return']        
