@@ -7,7 +7,6 @@ from . import serializers, models
 
 
 class TravelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin ,GenericViewSet):
-    queryset = models.Travel.objects.all()
     serializer_class = serializers.TravelSerializer
     # permission_classes = [IsAuthenticated]
     
@@ -18,8 +17,35 @@ class TravelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin ,GenericViewS
             return serializers.TravelSerializer
 
 
+    def get_queryset(self):
+        user = self.request.user
+        
+        if user.is_staff:
+            return models.Travel.objects.all()
+        else:
+            return models.Travel.objects.filter(user_id=user.id).all()
+    
+    
+    def get_serializer_context(self):
+        user_id = self.request.user.id
+        
+        return {
+            'user_id': user_id,
+            'request': self.request,
+            'format': self.format_kwarg,
+            'view': self
+        }
+
+
 class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
-    queryset = models.History.objects.all()
     serializer_class = serializers.HistorySerializer
-    # permission_classes = [IsAdminUser]
+    # permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        if user.is_staff:
+            return models.History.objects.all()
+        else:
+            return models.History.objects.filter(user_id=user.id).all()
 
