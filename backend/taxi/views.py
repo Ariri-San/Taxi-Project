@@ -10,11 +10,16 @@ class TravelViewSet(ModelViewSet):
     serializer_class = serializers.TravelSerializer
     # permission_classes = [IsAuthenticated]
     
+    
+    def get_permissions(self):
+        return super().get_permissions()
+    
+    
     def get_serializer_class(self):
         if self.request.method == "POST":
             return serializers.CreateTravelSerializer
         if self.request.method == "PUT":
-            return serializers.PutTravelSerializer
+            return serializers.UpdateTravelSerializer
         elif self.request.method == "GET":
             return serializers.TravelSerializer
 
