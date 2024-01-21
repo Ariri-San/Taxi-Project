@@ -6,13 +6,15 @@ from . import serializers, models
 # Create your views here.
 
 
-class TravelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin ,GenericViewSet):
+class TravelViewSet(ModelViewSet):
     serializer_class = serializers.TravelSerializer
     # permission_classes = [IsAuthenticated]
     
     def get_serializer_class(self):
         if self.request.method == "POST":
             return serializers.CreateTravelSerializer
+        if self.request.method == "PUT":
+            return serializers.PutTravelSerializer
         elif self.request.method == "GET":
             return serializers.TravelSerializer
 
