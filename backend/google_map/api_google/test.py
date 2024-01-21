@@ -1,7 +1,7 @@
 import googlemaps
 # from datetime import datetime
 
-key = "AIzaSyDEnymewL5xuqEqp3baWmzXley4_iUdYdk"
+key = "Token"
 gmaps = googlemaps.Client(key=key)
 
 
