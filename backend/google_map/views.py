@@ -20,7 +20,7 @@ gmaps = googlemaps.Client(key=key)
 
 
 class FindPlace(APIView):
-    def get(self, request, format=None):
+    def get(self, request):
         serializer = FindPlaceSerializer({"name":"ali"})
         return Response({"message": serializer.data})
 
@@ -29,13 +29,16 @@ class FindPlace(APIView):
         serializer.is_valid()
         
         name_search = serializer.data["name"]
-        find_places = gmaps.find_place((name_search + ", UK"), "textquery")
-        
-        list_show = ["formatted_address", "name", "url", "geometry"]
-        find_places_2 = []
-        for i in find_places["candidates"]:
-            place = gmaps.place(i["place_id"])["result"]
-            find_places_2.append({j:place[j] for j in place if j in list_show})
+        try:
+            find_places = gmaps.places_autocomplete(name_search, components={'country': ['UK']})
+            
+            list_show = ["formatted_address", "name", "url", "geometry"]
+            find_places_2 = []
+            for i in find_places:
+                place = gmaps.place(i["place_id"])["result"]
+                find_places_2.append({j:place[j] for j in place if j in list_show})
+        except:
+            return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return Response({"places": find_places_2}, status=status.HTTP_200_OK)
 
