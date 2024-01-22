@@ -8,21 +8,24 @@ from . import serializers, models, permissions
 
 
 class TravelViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # def destroy(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     delta = instance.present + timedelta(hours=12)
+        
+    #     if datetime.now().timestamp() <= delta.timestamp():
+    #         return super().destroy(request, *args, **kwargs)
+    #     return Response({
+    #         "error": "You cant delete this Travel",
+    #         "crated_time": f"{instance.present.date()}  {instance.present.time()}",
+    #         "now_time": f"{datetime.now().date()}  {datetime.now().time()}",
+    #     })
     
     
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        delta = instance.present + timedelta(hours=12)
-        
-        if datetime.now().timestamp() <= delta.timestamp():
-            return super().destroy(request, *args, **kwargs)
-        return Response({
-            "error": "You cant delete this Travel",
-            "crated_time": f"{instance.present.date()}  {instance.present.time()}",
-            "now_time": f"{datetime.now().date()}  {datetime.now().time()}",
-        })
-        
+    def get_permissions(self):
+        if self.request.method == 'DELETE': 
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
+    
     
     
     def update(self, request, *args, **kwargs):
