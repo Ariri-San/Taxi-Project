@@ -70,17 +70,16 @@ class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
 
 
 class FindPlace(APIView):
-    def get(self, request):
-        serializer = serializers.FindPlaceSerializer({"name":"ali"})
-        return Response({"message": serializer.data})
+    # def get(self, request):
+    #     serializer = serializers.FindPlaceSerializer({"name":"ali"})
+    #     return Response({"message": serializer.data})
 
     def post(self, request):
         serializer = serializers.FindPlaceSerializer(data=request.data)
         serializer.is_valid()
         
-        name_search = serializer.data["name"]
         try:
-            find_places = api_google.ApiGoogle().find_places(name_search)
+            find_places = api_google.ApiGoogle().find_places(serializer.data["name"])
             return Response({"places": find_places}, status=status.HTTP_200_OK)
         except:
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -90,11 +89,9 @@ class FindDistance(APIView):
     def post(self, request):
         serializer = serializers.FindDistanceSerializer(data=request.data)
         serializer.is_valid()
-        
-        origin = serializer.data["origin"]
-        destination = serializer.data["destination"]
+
         try:
-            find_places = api_google.ApiGoogle().find_places(origin, destination)
+            find_places = api_google.ApiGoogle().find_places(serializer.data["origin"], serializer.data["destination"])
             return Response({"places": find_places}, status=status.HTTP_200_OK)
         except:
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
