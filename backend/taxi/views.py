@@ -1,13 +1,25 @@
+from datetime import datetime, timedelta
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from . import serializers, models
+from . import serializers, models, permissions
 
 # Create your views here.
 
 
 class TravelViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
+    
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        
+        delta = instance.present + timedelta(hours=12)
+        
+        if datetime.now().timestamp() <= delta.timestamp():
+            return super().destroy(request, *args, **kwargs)
+        return Response({"error": "You cant delete this Travel", "crated_time": instance.present, "now_time": datetime.now()})
+        
     
     
     def update(self, request, *args, **kwargs):
@@ -27,7 +39,7 @@ class TravelViewSet(ModelViewSet):
                 return serializers.UpdateUserTravelSerializer
         else:
             return serializers.TravelSerializer
-
+    
 
     def get_queryset(self):
         user = self.request.user
@@ -47,6 +59,7 @@ class TravelViewSet(ModelViewSet):
             'format': self.format_kwarg,
             'view': self
         }
+
 
 
 class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
