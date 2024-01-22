@@ -97,3 +97,10 @@ class FindDistanceSerializer(serializers.Serializer):
     
     class Meta:
         fields = ["origin", "destination"]
+
+    
+class TravelToHistorySerializer(serializers.Serializer):
+    id = serializers.IntegerField(label="Id", required=True)
+    
+    class Meta:
+        fields = ["id"]

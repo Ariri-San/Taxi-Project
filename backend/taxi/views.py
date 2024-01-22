@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -69,11 +70,29 @@ class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
 
 
 
-class FindPlace(APIView):
-    # def get(self, request):
-    #     serializer = serializers.FindPlaceSerializer({"name":"ali"})
-    #     return Response({"message": serializer.data})
+class TravelToHistory(APIView):
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        serializer = serializers.TravelToHistorySerializer(data=request.data)
+        serializer.is_valid()
+        
+        with transaction.atomic():
+            travel_id = serializer.data["id"]
+            travel = models.Travel.objects.get(id=travel_id)
+            
+            print(travel)
 
+            # history = models.History.objects.create(travel)
+
+            # travel.delete()
+
+            return Response({"places": travel}, status=status.HTTP_201_CREATED)
+
+
+class FindPlace(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request):
         serializer = serializers.FindPlaceSerializer(data=request.data)
         serializer.is_valid()
@@ -86,6 +105,8 @@ class FindPlace(APIView):
 
 
 class FindDistance(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request):
         serializer = serializers.FindDistanceSerializer(data=request.data)
         serializer.is_valid()
