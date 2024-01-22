@@ -8,12 +8,18 @@ import uuid
 class PriceMile(models.Model):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
+    
+    def __str__(self) -> str:
+        return self.name
 
 
 class PriceDay(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    satrt = models.DateField()
-    finish = models.DateField()
+    satrt = models.TimeField()
+    finish = models.TimeField()
+    
+    def __str__(self) -> str:
+        return f"{self.price}$ :  {self.satrt} - {self.finish}"
 
 
 class JoinedPrice(models.Model):
@@ -21,13 +27,16 @@ class JoinedPrice(models.Model):
     OTHERDAYS = 'O'
 
     DAY_CHOICES = [
-    (SUNDAY, "Sunday"),
-    (OTHERDAYS, "Otherdays"),
+        (SUNDAY, "Sunday"),
+        (OTHERDAYS, "Otherdays"),
     ]
 
     day_of_week = models.CharField(max_length=1, choices=DAY_CHOICES)
     priceday = models.ForeignKey(PriceDay, on_delete=models.CASCADE)
     pricemile = models.ForeignKey(PriceMile, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return f"{self.pricemile.name}-{self.day_of_week} = {self.priceday.price}$ :  {self.priceday.satrt} - {self.priceday.finish}"
 
 
 class FixedPrice(models.Model):
