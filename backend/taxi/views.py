@@ -92,7 +92,7 @@ class FindDistance(APIView):
 
         find_distance = api_google.ApiGoogle().find_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
         if find_distance:
-            return Response({"distance": find_distance}, status=status.HTTP_200_OK)
+            return Response(find_distance, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         

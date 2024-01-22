@@ -41,22 +41,25 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         
         joined_price = self.check_day(joined_prices)
         
+        origin = validated_data["origin"]
+        destination = validated_data["destination"]
+        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)["distance_meter"]
+        mile = distance_meter * 0.000621371
+        price = joined_price.priceday.price * mile
         
-
-        price = joined_price.priceday.price
         return models.Travel.objects.create(**validated_data, price=price, user_id=self.context["user_id"])
         
     
     class Meta:
         model = models.Travel
-        fields = ['id', 'date', 'date_return', 'passengers','luggage','origin', 'destination']
+        fields = ['id', 'date', 'date_return', 'passengers', 'luggage', 'origin', 'destination']
 
 
 class UpdateAdminTravelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Travel
-        fields = ['payment_status', 'price', 'date', 'date_return', 'passengers','luggage','origin', 'destination']
+        fields = ['payment_status', 'price', 'date', 'date_return', 'passengers', 'luggage', 'origin', 'destination']
 
 
 class UpdateUserTravelSerializer(serializers.ModelSerializer):    
@@ -68,7 +71,7 @@ class UpdateUserTravelSerializer(serializers.ModelSerializer):
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.History
-        fields = ['id', 'user', 'price', 'date', 'date_return', 'passengers', 'luggage','confirmed', 'origin', 'destination', 'travel_code']
+        fields = ['id', 'user', 'price', 'date', 'date_return', 'passengers', 'luggage', 'confirmed', 'origin', 'destination', 'travel_code']
 
    
 class FindPlaceSerializer(serializers.Serializer):
