@@ -70,7 +70,9 @@ class Travel(models.Model):
     destination = models.CharField(max_length=511)
     payment_status = models.CharField(
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
-
+    
+    def __str__(self) -> str:
+        return f"{self.user} : {self.distance} mile = {self.price}$"
 
 
 class History(models.Model):
@@ -87,3 +89,7 @@ class History(models.Model):
     travel_code = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, max_length=36)
     origin = models.CharField(max_length=511)
     destination = models.CharField(max_length=511)
+    
+    def __str__(self) -> str:
+        return f"{self.user} : {self.distance} mile = {self.price}$"
+    

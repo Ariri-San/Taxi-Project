@@ -32,16 +32,9 @@ class ApiGoogle():
     def find_distance(self, origin, destination):
         try:
             distance = self.gmaps.distance_matrix(origins=origin, destinations=destination)
-            print(distance)
-            print(distance["rows"][0])
-            print(distance["rows"][0]["elements"])
-            print(distance["rows"][0]["elements"])
-            
             
             distance_meter = distance["rows"][0]["elements"][0]["distance"]["value"]
             duration = distance["rows"][0]["elements"][0]["duration"]["text"]
-            
-            print({"distance_meter": distance_meter, "duration": duration})
             
             return {"distance_meter": distance_meter, "duration": duration}
         except:

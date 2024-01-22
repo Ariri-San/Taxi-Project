@@ -34,27 +34,30 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     
     
     def create(self, validated_data):
-        price_miles = models.PriceMile.objects.filter(is_active=True).all()
-        price_mile = price_miles[0]
-        
-        joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
-        
-        joined_price = self.check_day(joined_prices)
-        
-        origin = validated_data["origin"]
-        destination = validated_data["destination"]
-        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
-        if not distance_meter:
-            raise serializers.ValidationError('Can Not Create Travel.')
-        
-        mile = float(distance_meter["distance_meter"]) * 0.000621371
-        price = float(joined_price.priceday.price) * mile
-        
-        return models.Travel.objects.create(**validated_data,
-                                            price=price,
-                                            user_id=self.context["user_id"],
-                                            distance=mile,
-                                            price_per_mile=joined_price)
+        try:
+            price_miles = models.PriceMile.objects.filter(is_active=True).all()
+            price_mile = price_miles[0]
+            
+            joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
+            
+            joined_price = self.check_day(joined_prices).priceday.price
+            
+            origin = validated_data["origin"]
+            destination = validated_data["destination"]
+            distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+            if not distance_meter:
+                raise serializers.ValidationError('Can Not Create Travel.')
+            
+            mile = float(distance_meter["distance_meter"]) * 0.000621371
+            price = float(joined_price) * mile
+            
+            return models.Travel.objects.create(**validated_data,
+                                                price=price,
+                                                user_id=self.context["user_id"],
+                                                distance=mile,
+                                                price_per_mile=float(joined_price))
+        except:
+            raise serializers.ValidationError('Price dose not exist contact to support service.')
         
     
     class Meta:
