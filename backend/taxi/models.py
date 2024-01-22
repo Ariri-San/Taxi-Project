@@ -58,6 +58,8 @@ class Travel(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    price_per_mile = models.DecimalField(max_digits=4, decimal_places=2)
+    distance = models.DecimalField(max_digits=10, decimal_places=2)
     passengers = models.PositiveSmallIntegerField(default=1)
     luggage = models.PositiveSmallIntegerField(default=1)
     date = models.DateField()
@@ -75,6 +77,8 @@ class History(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    price_per_mile = models.DecimalField(max_digits=4, decimal_places=2)
+    distance = models.DecimalField(max_digits=10, decimal_places=2)
     passengers = models.PositiveSmallIntegerField(default=1)
     luggage = models.PositiveSmallIntegerField(default=1)
     date = models.DateField()

@@ -43,11 +43,18 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         
         origin = validated_data["origin"]
         destination = validated_data["destination"]
-        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)["distance_meter"]
-        mile = distance_meter * 0.000621371
-        price = joined_price.priceday.price * mile
+        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        if not distance_meter:
+            raise serializers.ValidationError('Can Not Create Travel.')
         
-        return models.Travel.objects.create(**validated_data, price=price, user_id=self.context["user_id"])
+        mile = float(distance_meter["distance_meter"]) * 0.000621371
+        price = float(joined_price.priceday.price) * mile
+        
+        return models.Travel.objects.create(**validated_data,
+                                            price=price,
+                                            user_id=self.context["user_id"],
+                                            distance=mile,
+                                            price_per_mile=joined_price)
         
     
     class Meta:
