@@ -10,6 +10,9 @@ class TravelSerializer(serializers.ModelSerializer):
 
 class CreateTravelSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
+        price_miles = models.PriceMile.objects.filter(is_active=True).all()
+        price_miles[0]
+        
         price = None
         return models.Travel.objects.create(**validated_data, price=price)
         

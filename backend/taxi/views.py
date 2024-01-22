@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from . import serializers, models, permissions
+from . import serializers, models
 
 # Create your views here.
 
