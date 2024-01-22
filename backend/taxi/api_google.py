@@ -21,8 +21,10 @@ class ApiGoogle():
             for i in find_places:
                 place = self.gmaps.place(i["place_id"])["result"]
                 find_places_2.append({j:place[j] for j in place if j in list_show})
-                
-            return find_places_2
+            
+            if find_places_2:
+                return find_places_2
+            return True
         except:
             return False
     

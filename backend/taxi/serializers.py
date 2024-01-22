@@ -1,6 +1,6 @@
 from datetime import datetime
 from rest_framework import serializers
-from . import models
+from . import models, api_google
 
 
 
@@ -40,6 +40,8 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
         
         joined_price = self.check_day(joined_prices)
+        
+        
 
         price = joined_price.priceday.price
         return models.Travel.objects.create(**validated_data, price=price, user_id=self.context["user_id"])

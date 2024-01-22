@@ -78,10 +78,10 @@ class FindPlace(APIView):
         serializer = serializers.FindPlaceSerializer(data=request.data)
         serializer.is_valid()
         
-        try:
-            find_places = api_google.ApiGoogle().find_places(serializer.data["name"])
+        find_places = api_google.ApiGoogle().find_places(serializer.data["name"])
+        if find_places:
             return Response({"places": find_places}, status=status.HTTP_200_OK)
-        except:
+        else:
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -90,10 +90,10 @@ class FindDistance(APIView):
         serializer = serializers.FindDistanceSerializer(data=request.data)
         serializer.is_valid()
 
-        try:
-            find_places = api_google.ApiGoogle().find_places(serializer.data["origin"], serializer.data["destination"])
-            return Response({"places": find_places}, status=status.HTTP_200_OK)
-        except:
+        find_distance = api_google.ApiGoogle().find_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
+        if find_distance:
+            return Response({"distance": find_distance}, status=status.HTTP_200_OK)
+        else:
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
