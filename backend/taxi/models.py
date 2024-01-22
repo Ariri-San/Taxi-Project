@@ -15,11 +15,11 @@ class PriceMile(models.Model):
 
 class PriceDay(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    satrt = models.TimeField()
+    start = models.TimeField()
     finish = models.TimeField()
     
     def __str__(self) -> str:
-        return f"{self.price}$ :  {self.satrt} - {self.finish}"
+        return f"{self.price}$ :  {self.start} - {self.finish}"
 
 
 class JoinedPrice(models.Model):
@@ -32,11 +32,11 @@ class JoinedPrice(models.Model):
     ]
 
     day_of_week = models.CharField(max_length=1, choices=DAY_CHOICES)
-    priceday = models.ForeignKey(PriceDay, on_delete=models.CASCADE, related_name="joined_price")
-    pricemile = models.ForeignKey(PriceMile, on_delete=models.CASCADE, related_name="joined_price")
+    priceday = models.ForeignKey(PriceDay, on_delete=models.CASCADE, related_name="joined_prices")
+    pricemile = models.ForeignKey(PriceMile, on_delete=models.CASCADE, related_name="joined_prices")
     
     def __str__(self) -> str:
-        return f"{self.pricemile.name}-{self.day_of_week} = {self.priceday.price}$ :  {self.priceday.satrt} - {self.priceday.finish}"
+        return f"{self.pricemile.name}-{self.day_of_week} = {self.priceday.price}$ :  {self.priceday.start} - {self.priceday.finish}"
 
 
 class FixedPrice(models.Model):
