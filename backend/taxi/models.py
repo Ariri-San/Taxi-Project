@@ -7,6 +7,7 @@ import uuid
 
 class PriceMile(models.Model):
     name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=False)
 
 
 class PriceDay(models.Model):
@@ -53,7 +54,7 @@ class Travel(models.Model):
     date = models.DateField()
     date_return = models.DateField(blank=True, null=True)
     present = models.DateTimeField(auto_now_add=True)
-    travel_code = models.UUIDField(unique=True,default=uuid.uuid4, editable=False, max_length=36)
+    travel_code = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, max_length=36)
     origin = models.CharField(max_length=511)
     destination = models.CharField(max_length=511)
     payment_status = models.CharField(

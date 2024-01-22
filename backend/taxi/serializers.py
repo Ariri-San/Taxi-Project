@@ -9,7 +9,9 @@ class TravelSerializer(serializers.ModelSerializer):
 
 
 class CreateTravelSerializer(serializers.ModelSerializer):
-    # def create(self, validated_data):
+    def create(self, validated_data):
+        price = None
+        return models.Travel.objects.create(**validated_data, price=price)
         
     
     class Meta:
