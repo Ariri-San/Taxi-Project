@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from . import serializers, models
@@ -7,20 +7,26 @@ from . import serializers, models
 
 
 class TravelViewSet(ModelViewSet):
-    # serializer_class = serializers.TravelSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     
-    # def get_permissions(self):
-    #     return super().get_permissions()
+    def update(self, request, *args, **kwargs):
+        user = self.request.user
+        if self.get_object().user == user or user.is_staff:
+            return super().update(request, *args, **kwargs)
+        return Response({"error": "You cant edit this Travel"})
     
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.CreateTravelSerializer
         elif self.request.method == 'PUT':
-            return serializers.UpdateUserTravelSerializer
-        return serializers.TravelSerializer
+            if self.request.user.is_staff:
+                return serializers.UpdateAdminTravelSerializer
+            else:
+                return serializers.UpdateUserTravelSerializer
+        else:
+            return serializers.TravelSerializer
 
 
     def get_queryset(self):
