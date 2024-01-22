@@ -32,8 +32,8 @@ class JoinedPrice(models.Model):
     ]
 
     day_of_week = models.CharField(max_length=1, choices=DAY_CHOICES)
-    priceday = models.ForeignKey(PriceDay, on_delete=models.CASCADE)
-    pricemile = models.ForeignKey(PriceMile, on_delete=models.CASCADE)
+    priceday = models.ForeignKey(PriceDay, on_delete=models.CASCADE, related_name="joined_price")
+    pricemile = models.ForeignKey(PriceMile, on_delete=models.CASCADE, related_name="joined_price")
     
     def __str__(self) -> str:
         return f"{self.pricemile.name}-{self.day_of_week} = {self.priceday.price}$ :  {self.priceday.satrt} - {self.priceday.finish}"
