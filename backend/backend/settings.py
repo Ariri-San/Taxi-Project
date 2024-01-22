@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'djoser',
     'core',
     'taxi',
-    'google_map',
 ]
 
 MIDDLEWARE = [

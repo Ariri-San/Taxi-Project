@@ -67,3 +67,18 @@ class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.History
         fields = ['id', 'user', 'price', 'date', 'date_return', 'passengers', 'luggage','confirmed', 'origin', 'destination', 'travel_code']
+
+   
+class FindPlaceSerializer(serializers.Serializer):
+    name = serializers.CharField(label="Name", required=True, max_length=511)
+    
+    class Meta:
+        fields = ["name"]
+
+
+class FindDistanceSerializer(serializers.Serializer):
+    origin = serializers.CharField(label="Origin", required=True, max_length=511)
+    destination = serializers.CharField(label="Destination", required=True, max_length=511)
+    
+    class Meta:
+        fields = ["origin", "destination"]
