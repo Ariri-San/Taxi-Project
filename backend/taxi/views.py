@@ -13,12 +13,15 @@ class TravelViewSet(ModelViewSet):
     
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        
         delta = instance.present + timedelta(hours=12)
         
         if datetime.now().timestamp() <= delta.timestamp():
             return super().destroy(request, *args, **kwargs)
-        return Response({"error": "You cant delete this Travel", "crated_time": instance.present, "now_time": datetime.now()})
+        return Response({
+            "error": "You cant delete this Travel",
+            "crated_time": f"{instance.present.date()}  {instance.present.time()}",
+            "now_time": f"{datetime.now().date()}  {datetime.now().time()}",
+        })
         
     
     
