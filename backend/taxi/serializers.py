@@ -106,5 +106,10 @@ class TravelToHistorySerializer(serializers.Serializer):
         fields = ["id"]
 
 
-# class FixedPriceSerializer(serializers.Serializer):
+class FixedPriceSerializer(serializers.Serializer):
+    price = serializers.IntegerField(required=True)  
+    name = serializers.CharField(max_length=255, required=True)
+    formated_address = serializers.CharField(max_length=511, required=True)
     
+    class Meta:
+        fields = ["name", "price", "formated_address"]

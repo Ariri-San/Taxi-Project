@@ -10,6 +10,7 @@ api_url = [
     path('find_place/', views.FindPlace.as_view()),
     path('find_distance/', views.FindDistance.as_view()),
     path('travel_to_history/', views.TravelToHistory.as_view()),
+    path('fixed_places/', views.TravelFixedPlacesApi.as_view()),
 ]
 
 urlpatterns = router.urls + api_url

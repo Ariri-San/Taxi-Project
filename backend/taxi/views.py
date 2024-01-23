@@ -133,5 +133,12 @@ class FindDistance(APIView):
 class TravelFixedPlacesApi(APIView):
     permission_classes = [IsAuthenticated]
     
-    def get(self, request):
+    def get(self):
         places = models.FixedPrice.objects.all()
+        serializer = serializers.FixedPriceSerializer(places, many=True)
+        
+        Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+    # def post(self, request):
+        
