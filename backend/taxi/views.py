@@ -131,3 +131,8 @@ class FindDistance(APIView):
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
+class TravelFixedPlacesApi(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        places = models.FixedPrice.objects.all()

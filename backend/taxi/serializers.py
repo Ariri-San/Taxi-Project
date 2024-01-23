@@ -104,3 +104,7 @@ class TravelToHistorySerializer(serializers.Serializer):
     
     class Meta:
         fields = ["id"]
+
+
+class FixedPriceSerializer(serializers.Serializer):
+    
