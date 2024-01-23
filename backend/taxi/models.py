@@ -41,8 +41,9 @@ class JoinedPrice(models.Model):
 
 class FixedPrice(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)  
-    destination = models.CharField(max_length=255)
-
+    fixed_location = models.CharField(max_length=511)
+    dynamic_location = models.CharField(max_length=511)
+    
 
 class Travel(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
