@@ -106,5 +106,5 @@ class TravelToHistorySerializer(serializers.Serializer):
         fields = ["id"]
 
 
-class FixedPriceSerializer(serializers.Serializer):
+# class FixedPriceSerializer(serializers.Serializer):
     

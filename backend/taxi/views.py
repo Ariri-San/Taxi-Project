@@ -80,7 +80,6 @@ class TravelToHistory(APIView):
         with transaction.atomic():
             travel_id = serializer.data["id"]
             travel = models.Travel.objects.get(id=travel_id) 
-            print(travel)
 
             history = models.History.objects.create(
                 user = travel.user,
@@ -100,7 +99,7 @@ class TravelToHistory(APIView):
 
             travel.delete()
 
-            return Response({"data": history_serializer.data,"comment": "history saved"}, status=status.HTTP_201_CREATED)
+            return Response({"comment": "history saved"}, status=status.HTTP_201_CREATED)
 
 
 class FindPlace(APIView):

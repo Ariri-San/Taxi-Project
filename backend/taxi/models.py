@@ -85,7 +85,7 @@ class History(models.Model):
     passengers = models.PositiveSmallIntegerField(default=1)
     luggage = models.PositiveSmallIntegerField(default=1)
     date = models.DateField()
-    date_return = models.DateField()
+    date_return = models.DateField(blank=True, null=True)
     confirmed = models.DateTimeField(auto_now_add=True)
     travel_code = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, max_length=36)
     origin = models.CharField(max_length=511)
