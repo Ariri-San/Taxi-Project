@@ -33,31 +33,52 @@ class CreateTravelSerializer(serializers.ModelSerializer):
                         return joined_price
     
     
+    def check_fixed_price(self, origin, destination):
+        fixed_origin = models.FixedPrice.objects.filter(formated_address=origin).all()
+        fixed_destination = models.FixedPrice.objects.filter(formated_address=destination).all()
+        print(fixed_origin, fixed_destination)
+        
+        price = 0
+        if fixed_origin:
+            price = fixed_origin[0].price
+        if fixed_destination:
+            if fixed_destination[0].price > price:
+                price = fixed_destination[0].price
+        if price > 0:
+            return price
+        else:
+            return False
+    
+    
     def create(self, validated_data):
-        try:
-            price_miles = models.PriceMile.objects.filter(is_active=True).all()
-            price_mile = price_miles[0]
-            
-            joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
-            
-            joined_price = self.check_day(joined_prices).priceday.price
-            
-            origin = validated_data["origin"]
-            destination = validated_data["destination"]
-            distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
-            if not distance_meter:
-                raise serializers.ValidationError('Can Not Create Travel.')
-            
-            mile = float(distance_meter["distance_meter"]) * 0.000621371
+        # try:
+        price_miles = models.PriceMile.objects.filter(is_active=True).all()
+        price_mile = price_miles[0]
+        
+        joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
+        
+        joined_price = self.check_day(joined_prices).priceday.price
+        
+        origin = validated_data["origin"]
+        destination = validated_data["destination"]
+        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        if not distance_meter:
+            raise serializers.ValidationError('Can Not Create Travel.')
+        mile = float(distance_meter["distance_meter"]) * 0.000621371
+        
+        fixed_price = self.check_fixed_price(origin, destination)
+        if fixed_price:
+            price = fixed_price
+        else:
             price = float(joined_price) * mile
-            
-            return models.Travel.objects.create(**validated_data,
-                                                price=price,
-                                                user_id=self.context["user_id"],
-                                                distance=mile,
-                                                price_per_mile=float(joined_price))
-        except:
-            raise serializers.ValidationError('Price dose not exist contact to support service.')
+        
+        return models.Travel.objects.create(**validated_data,
+                                            price=price,
+                                            user_id=self.context["user_id"],
+                                            distance=mile,
+                                            price_per_mile=float(joined_price))
+        # except:
+        #     raise serializers.ValidationError('Price dose not exist contact to support service.')
         
     
     class Meta:

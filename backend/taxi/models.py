@@ -45,7 +45,7 @@ class FixedPrice(models.Model):
     formated_address = models.CharField(max_length=511)
     
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} - {self.formated_address}"
 
 
 class Travel(models.Model):
