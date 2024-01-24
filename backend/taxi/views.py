@@ -79,7 +79,7 @@ class TravelToHistory(APIView):
     permission_classes = [IsAdminUser]
     
     def post(self, request):
-        serializer = serializers.TravelToHistorySerializer(data=request.data)
+        serializer = serializers.GetTravelSerializer(data=request.data)
         serializer.is_valid()
         
         with transaction.atomic():
@@ -136,5 +136,25 @@ class FindDistance(APIView):
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
+class CancelTravel(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        serializer = serializers.GetTravelSerializer(data=request.data)
+        serializer.is_valid()
         
+        travel_id = serializer.data["id"]
+        travel = models.Travel.objects.get(id=travel_id)
         
+        user = request.user
+        if user.is_staff:
+            travel.payment_status = "F"
+        elif user == travel.user:
+            if travel.payment_status == "P":
+                travel.payment_status = "F"
+            # if travel.payment_status == "C":
+            #     travel.payment_status = "F"
+            #     # api money
+        travel.save()
+        
+        return Response({"comment": "travel Canceled"}, status=status.HTTP_200_OK)
