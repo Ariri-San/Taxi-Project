@@ -44,6 +44,9 @@ class FixedPrice(models.Model):
     name = models.CharField(max_length=255)
     formated_address = models.CharField(max_length=511)
     
+    def __str__(self) -> str:
+        return self.name
+
 
 class Travel(models.Model):
     PAYMENT_STATUS_PENDING = 'P'

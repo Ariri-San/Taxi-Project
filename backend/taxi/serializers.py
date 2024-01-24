@@ -83,6 +83,12 @@ class HistorySerializer(serializers.ModelSerializer):
         model = models.History
         fields = ['id', 'user', 'price', 'date', 'date_return', 'passengers', 'luggage', 'confirmed', 'origin', 'destination', 'travel_code']
 
+
+class FixedPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FixedPrice
+        fields = ["id", "name", "price", "formated_address"]
+
    
 class FindPlaceSerializer(serializers.Serializer):
     name = serializers.CharField(label="Name", required=True, max_length=511)
@@ -104,12 +110,3 @@ class TravelToHistorySerializer(serializers.Serializer):
     
     class Meta:
         fields = ["id"]
-
-
-class FixedPriceSerializer(serializers.Serializer):
-    price = serializers.IntegerField(required=True)  
-    name = serializers.CharField(max_length=255, required=True)
-    formated_address = serializers.CharField(max_length=511, required=True)
-    
-    class Meta:
-        fields = ["name", "price", "formated_address"]

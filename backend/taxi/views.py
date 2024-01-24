@@ -55,8 +55,7 @@ class TravelViewSet(ModelViewSet):
         }
 
 
-
-class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
+class HistoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin ,GenericViewSet):
     serializer_class = serializers.HistorySerializer
     permission_classes = [IsAuthenticated]
     
@@ -67,6 +66,12 @@ class HistoryViewSet(mixins.ListModelMixin ,GenericViewSet):
             return models.History.objects.all()
         else:
             return models.History.objects.filter(user_id=user.id).all()
+
+
+class FixedPlacesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin ,GenericViewSet):
+    queryset = models.FixedPrice.objects.all()
+    serializer_class = serializers.FixedPriceSerializer
+    permission_classes = [IsAuthenticated]
 
 
 
@@ -94,6 +99,7 @@ class TravelToHistory(APIView):
                 origin = travel.origin,
                 destination = travel.destination
             )
+            
             history_serializer = serializers.HistorySerializer(data=history)
             history_serializer.is_valid()
 
@@ -130,15 +136,5 @@ class FindDistance(APIView):
             return Response({"error": "Google Map Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
-class TravelFixedPlacesApi(APIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get(self):
-        places = models.FixedPrice.objects.all()
-        serializer = serializers.FixedPriceSerializer(places, many=True)
         
-        Response(serializer.data, status=status.HTTP_200_OK)
-    
-    
-    # def post(self, request):
         
