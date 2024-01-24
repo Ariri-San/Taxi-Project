@@ -50,7 +50,6 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     
     
     def create(self, validated_data):
-        
         price_miles = models.PriceMile.objects.filter(is_active=True).all()
         price_mile = price_miles[0]
         
