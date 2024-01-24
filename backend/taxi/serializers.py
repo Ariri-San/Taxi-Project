@@ -36,7 +36,6 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     def check_fixed_price(self, origin, destination):
         fixed_origin = models.FixedPrice.objects.filter(formated_address=origin).all()
         fixed_destination = models.FixedPrice.objects.filter(formated_address=destination).all()
-        print(fixed_origin, fixed_destination)
         
         price = 0
         if fixed_origin:
@@ -51,13 +50,15 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     
     
     def create(self, validated_data):
-        # try:
+        
         price_miles = models.PriceMile.objects.filter(is_active=True).all()
         price_mile = price_miles[0]
         
         joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
-        
-        joined_price = self.check_day(joined_prices).priceday.price
+        try:
+            joined_price = self.check_day(joined_prices).priceday.price
+        except:
+            raise serializers.ValidationError('Price dose not exist contact to support service.')
         
         origin = validated_data["origin"]
         destination = validated_data["destination"]
@@ -77,8 +78,6 @@ class CreateTravelSerializer(serializers.ModelSerializer):
                                             user_id=self.context["user_id"],
                                             distance=mile,
                                             price_per_mile=float(joined_price))
-        # except:
-        #     raise serializers.ValidationError('Price dose not exist contact to support service.')
         
     
     class Meta:
