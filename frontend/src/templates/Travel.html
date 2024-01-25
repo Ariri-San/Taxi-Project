@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,107 +9,115 @@
     <link rel="stylesheet" href="css/styale.css">
     <link rel="apple-touch-icon" href="iWelwyn Airport Taxis Logo - Black with White Background - 5000x5000.png">
     <title>Taxi Booking Service</title>
-    <li">
+    <!-- <li"> -->
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a href="home.html">
-        <img src="img/Welwyn Airport Taxis Logo - Black with White Background - 5000x5000.png" alt="Company Logo" style="width: 67px;"> 
-      </a>
-    <a class="navbar-brand" href="#">Welwyn Airport Taxis</a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="login.html" id="loginButton">Login</a>
-                <a class="nav-link" href="home.html">home</a>
-                <a class="nav-link" href="Booked Travels.html">History</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="home.html">
+            <img src="img/Welwyn Airport Taxis Logo - Black with White Background - 5000x5000.png" alt="Company Logo"
+                style="width: 67px;">
+        </a>
+        <a class="navbar-brand" href="#">Welwyn Airport Taxis</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" id="loginButton">Login</a>
+                    <a class="nav-link" href="home.html">home</a>
+                    <a class="nav-link" href="Booked Travels.html">History</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 text-center">
-            <h2>Welcome to our Taxi Booking Service</h2>
-            <p>Book your taxi conveniently with our online platform.</p>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h2>Welcome to our Taxi Booking Service</h2>
+                <p>Book your taxi conveniently with our online platform.</p>
 
-            <div class="alert alert-info" role="alert">
-                Enjoy a comfortable and hassle-free taxi experience with our reliable service!
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="origin">Origin:</label>
-                    <input type="text" class="form-control" id="origin" name="origin" placeholder="Enter your location">
+                <div class="alert alert-info" role="alert">
+                    Enjoy a comfortable and hassle-free taxi experience with our reliable service!
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="destination">Destination:</label>
-                    <input type="text" class="form-control" id="destination" name="destination" placeholder="Enter your destination">
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label for="passengers">Number of Passengers:</label>
-                <input type="number" class="form-control" id="passengers" name="passengers" min="1" placeholder="Enter number of passengers" required>
-            </div>
-
-            <div class="form-group">
-                <label for="luggageCount">Number of Luggage:</label>
-                <input type="number" class="form-control" id="luggageCount" name="luggageCount" min="0" placeholder="Enter number of luggage">
-            </div>
-
-            <div class="form-group">
-                <label for="pickUpOption">Pick-up Option:</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="pickUpOption" id="pickUpASAP" value="ASAP" checked>
-                    <label class="form-check-label" for="pickUpASAP">
-                        Pick-up ASAP
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="pickUpOption" id="pickUpLater" value="Later">
-                    <label class="form-check-label" for="pickUpLater">
-                        Pick-up Later
-                    </label>
-                    <div class="form-group" id="pickUpLaterDateField" style="display: none;">
-                        <label for="pickUpLaterDate">Pick-up Date:</label>
-                        <input type="date" class="form-control" id="pickUpLaterDate" name="pickUpLaterDate">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="origin">Origin:</label>
+                        <input type="text" class="form-control" id="origin" name="origin"
+                            placeholder="Enter your location">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="destination">Destination:</label>
+                        <input type="text" class="form-control" id="destination" name="destination"
+                            placeholder="Enter your destination">
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="returnTravel" name="returnTravel">
-                    <label class="form-check-label" for="returnTravel">
-                        Return Travel Required
-                    </label>
-                    <div class="form-group" id="returnDateField" style="display: none;">
-                        <label for="returnDate">Return Date:</label>
-                        <input type="date" class="form-control" id="returnDate" name="returnDate">
+                <div class="form-group">
+                    <label for="passengers">Number of Passengers:</label>
+                    <input type="number" class="form-control" id="passengers" name="passengers" min="1"
+                        placeholder="Enter number of passengers" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="luggageCount">Number of Luggage:</label>
+                    <input type="number" class="form-control" id="luggageCount" name="luggageCount" min="0"
+                        placeholder="Enter number of luggage">
+                </div>
+
+                <div class="form-group">
+                    <label for="pickUpOption">Pick-up Option:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pickUpOption" id="pickUpASAP" value="ASAP"
+                            checked>
+                        <label class="form-check-label" for="pickUpASAP">
+                            Pick-up ASAP
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pickUpOption" id="pickUpLater" value="Later">
+                        <label class="form-check-label" for="pickUpLater">
+                            Pick-up Later
+                        </label>
+                        <div class="form-group" id="pickUpLaterDateField" style="display: none;">
+                            <label for="pickUpLaterDate">Pick-up Date:</label>
+                            <input type="date" class="form-control" id="pickUpLaterDate" name="pickUpLaterDate">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="button" class="btn btn-primary" id="generateButton">Generate</button>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="returnTravel" name="returnTravel">
+                        <label class="form-check-label" for="returnTravel">
+                            Return Travel Required
+                        </label>
+                        <div class="form-group" id="returnDateField" style="display: none;">
+                            <label for="returnDate">Return Date:</label>
+                            <input type="date" class="form-control" id="returnDate" name="returnDate">
+                        </div>
+                    </div>
+                </div>
 
-            <div id="priceDisplay" style="display: none;">
-                <h4>Estimated Price:</h4>
-                <p id="priceAmount">0.00 USD</p>
+                <button type="button" class="btn btn-primary" id="generateButton">Generate</button>
+
+                <div id="priceDisplay" style="display: none;">
+                    <h4>Estimated Price:</h4>
+                    <p id="priceAmount">0.00 USD</p>
+                </div>
             </div>
         </div>
-    </div>
-    <footer class="mt-5 text-center" style="width: 100%;">
-        <p>&copy; 2024 Welwyn Airport Taxis. All rights reserved.</p>
-    </footer>
-    
-    <script></script>
-    
-    </body>
-    </html>
-    
+        <footer class="mt-5 text-center" style="width: 100%;">
+            <p>&copy; 2024 Welwyn Airport Taxis. All rights reserved.</p>
+        </footer>
+
+        <script></script>
+
+</body>
+
+</html>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -151,4 +160,5 @@
 </script>
 
 </body>
+
 </html>
