@@ -41,7 +41,7 @@ class App extends Component {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Routes>
-        <SimpleMap></SimpleMap>
+        <SimpleMap />
       </React.Fragment>
     );
   }
