@@ -32,13 +32,12 @@ class App extends Component {
         <Navbar user={this.state.user} />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/users" element={<Customers />}></Route>
-          <Route
-            path="/users/:id"
-            element={this.state.user && <Userr user={this.state.user} />}
-          ></Route>
+          <Route path="/users" element={<Users />}></Route>
+          <Route path="/users/:id" element={<User user={this.state.user} />}></Route>
           <Route path="/travels" element={<Travels user={this.state.user} />}></Route>
-          <Route path="/travels/:id" element={<Travel user={this.state.user} />}></Route>
+          <Route path="/travels/add" element={<AddTravel user={this.state.user} />}></Route>
+          <Route path="/travels/:id" element={<EditTravel user={this.state.user} />}></Route>
+          <Route path="/histoies" element={<Histoies user={this.state.user} />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Routes>
