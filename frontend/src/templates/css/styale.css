@@ -1,0 +1,95 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
+}
+.wrapper {
+    flex: 1;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 118%;
+    height: 11%;
+    background: #333;
+    color: #fff;
+    padding: 50px 0;
+}
+.bg-light {
+    margin: 0;
+    padding: 0;
+}
+.footer-top {
+    width: 100%;
+    background-color: #222; 
+    padding: 20px 0; 
+}
+
+.footer-top .container {
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.footer-top .row {
+    margin: 0 -15px;
+}
+
+.footer-top [class^="col-"] {
+    padding: 0 15px;
+}
+
+.footer-bottom {
+    background: #444;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0; 
+}
+
+.footer-bottom .container {
+    max-width: 100%;
+}
+.social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0; 
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+}
+
+.social-icons a:hover {
+    color: #ffd700;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 93%;
+    height: 11%;
+    background: #333;
+    color: #fff;
+    padding: 50px 0;
+    margin: 0 -205px 0px -351px;
+}
+.container {
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+#navbar-brand{
+    position: fixed;
+}
+.nav-item{
+    display: flex;
+}
