@@ -4,6 +4,9 @@ import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router";
 import request from "./services/requestService";
 import auth from "./services/authService";
+import Navbar from "./components/navbar";
+import Login from "./components/login";
+import Logout from "./components/logout";
 import SimpleMap from "./components/map";
 
 class App extends Component {
