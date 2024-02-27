@@ -2,20 +2,18 @@ import React from "react";
 import { useNavigate } from "react-router";
 import auth from "../services/authService";
 import { NavLink } from "react-router-dom";
-import LoginForm from "./forms/loginForm";
+import RegisterForm from "./forms/registerForm";
 
 
-
-function doResults(data, results) {
-    auth.loginWithJwt(results.data.access, results.data.refresh);
+async function doResults(data, results) {
+    await auth.login(data.username, data.password);
     window.location = "/";
 }
 
 
-
-function Login(props) {
+function Register(props) {
     const navigate = useNavigate();
-    const url = "auth/jwt/create/";
+    const url = "auth/users/";
 
     return (
         <React.Fragment>
@@ -24,10 +22,10 @@ function Login(props) {
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header text-center">
-                                <h3>Login</h3>
+                                <h3>Register</h3>
                             </div>
                             <div class="card-body">
-                                <LoginForm
+                                <RegisterForm
                                     navigate={navigate}
                                     onResults={doResults}
                                     urlForm={url}
@@ -41,4 +39,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default Register;

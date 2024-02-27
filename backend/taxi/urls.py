@@ -5,7 +5,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register('travel', views.TravelViewSet, basename='travel')
 router.register('history', views.HistoryViewSet, basename='history')
-router.register('fixed_places', views.FixedPlacesViewSet, basename='history')
+router.register('fixed_places', views.FixedPlacesViewSet, basename='fixed_places')
 
 
 api_url = [

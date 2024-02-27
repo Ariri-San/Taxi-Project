@@ -3,12 +3,109 @@ import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
 import TextArea from "./textArea";
+import { toast } from "react-toastify";
+import request from "../services/requestService.js";
 
 class Form extends Component {
     state = {
         data: {},
         errors: {},
     };
+
+
+    doSubmit = async (data) => {
+        if (this.props.onSubmit) {
+            return this.props.onSubmit(this.state);
+        }
+
+        try {
+            const response = request.saveObject(this.setFormData(data, new FormData()), this.props.urlForm, this.props.id);
+
+            this.buttonDisabled = true;
+            const results = await response;
+
+            toast.promise(
+                response.then(() => new Promise(resolve => setTimeout(resolve, 300))),
+                {
+                    pending: 'Loading...',
+                    success: { render: `${results.data.id ? `Id: ${results.data.id}, ` : ""}message: ${results.statusText}`, autoClose: 1500 },
+                    error: `${results.statusText} 🤯`
+                }
+            );
+
+            // console.log(results);
+
+            await new Promise(resolve => setTimeout(resolve, 2000))
+            this.buttonDisabled = false;
+            if (this.props.onResults) {
+                this.props.onResults(data, results);
+            }
+
+            return this.props.navigate(this.props.toPath);
+
+        } catch (error) {
+            console.log(error)
+            if (error.response.data) {
+                const errorData = this.addErrors(error.response.data, {}), newError = {}
+                if (errorData["key"] === "0") toast.error(errorData["value"][0]);
+                else newError[errorData["key"]] = errorData["value"];
+                this.setState({ errors: newError });
+
+                // console.log(error);
+                toast.error(error.response.statusText);
+            };
+
+            await new Promise(resolve => setTimeout(resolve, 500))
+            this.buttonDisabled = false;
+            this.props.navigate();
+        }
+    };
+
+
+    setFormData(data, formData, addKey = "") {
+        for (const key in data) {
+            // console.log(key, data[key]);
+
+            if (typeof data[key] === "object" && data[key]) {
+                if (Object.keys(data[key]).length > 0) {
+                    this.setFormData(data[key], formData, addKey + key + ".");
+                }
+                else if (data[key]) formData.append(addKey + key, data[key]);  // this is file
+            }
+            else if (data[key]) formData.append(addKey + key, data[key]);   // this is string
+
+        }
+
+        return formData;
+    }
+
+
+    addErrors(error, new_error) {
+        if (Array.isArray(error))
+            return {
+                "key": Object.keys(error)[0],
+                "value": error
+            };
+        for (const key in error) {
+            if (key === "detail") return toast.error(error.detail)
+            if (Object.hasOwnProperty.call(error, key)) {
+                if (Array.isArray(error[key]))
+                    return {
+                        "key": Object.keys(error)[0],
+                        "value": error[key]
+                    };
+                if (Object.keys(error[key])) {
+                    const error_2 = this.addErrors(error[key]);
+                    return {
+                        "key": Object.keys(error)[0] + "." + error_2["key"],
+                        "value": error_2["value"]
+                    };
+                }
+            }
+        }
+        return error;
+    }
+
 
 
     updateNestedValue(obj, keys, newValue) {
@@ -103,7 +200,7 @@ class Form extends Component {
         );
     }
 
-    renderInput(name, label, type = "text") {
+    renderInput(name, label, type = "text", list = "") {
         const { data, errors } = this.state;
 
         return (
@@ -113,6 +210,7 @@ class Form extends Component {
                 name={name}
                 value={data[name]}
                 label={label}
+                list={list}
                 onChange={this.handleChange}
                 error={errors[name]}
             />

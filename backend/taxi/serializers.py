@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from rest_framework import serializers
 from . import models, api_google
 
@@ -12,7 +12,7 @@ class TravelSerializer(serializers.ModelSerializer):
 
 class CreateTravelSerializer(serializers.ModelSerializer):
     def check_day(self, joined_prices):
-        now = datetime.now()
+        now = datetime.datetime.now()
         day = now.isoweekday()
         if day == 7:
             day = "S"
@@ -50,6 +50,9 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     
     
     def create(self, validated_data):
+        if "date" not in validated_data:
+            validated_data["date"] = datetime.date.today()
+        
         price_miles = models.PriceMile.objects.filter(is_active=True).all()
         price_mile = price_miles[0]
         
@@ -82,6 +85,9 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Travel
         fields = ['id', 'date', 'date_return', 'passengers', 'luggage', 'origin', 'destination']
+        extra_kwargs = {
+            "date": {"required": False},
+        }
 
 
 class UpdateAdminTravelSerializer(serializers.ModelSerializer):
