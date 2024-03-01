@@ -76,7 +76,11 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         origin = validated_data["origin"]
         destination = validated_data["destination"]
         
-        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        try:
+            distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        except:
+            raise serializers.ValidationError('Can Not Create Travel.')
+        
         if not distance_meter:
             raise serializers.ValidationError('Can Not Create Travel.')
         mile = float(distance_meter["distance_meter"]) * 0.000621371
