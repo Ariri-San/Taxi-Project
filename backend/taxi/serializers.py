@@ -11,6 +11,17 @@ class TravelSerializer(serializers.ModelSerializer):
 
 
 class CreateTravelSerializer(serializers.ModelSerializer):
+    def validate_origin(self, origin):
+        if not api_google.ApiGoogle().find_place(origin):
+            raise serializers.ValidationError('Please Enter Currect Origin.')
+        return origin
+    
+    def validate_destination(self, destination):
+        if not api_google.ApiGoogle().find_place(destination):
+            raise serializers.ValidationError('Please Enter Currect Destination.')
+        return destination
+    
+    
     def check_day(self, joined_prices):
         now = datetime.datetime.now()
         day = now.isoweekday()
@@ -64,6 +75,7 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         
         origin = validated_data["origin"]
         destination = validated_data["destination"]
+        
         distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
         if not distance_meter:
             raise serializers.ValidationError('Can Not Create Travel.')

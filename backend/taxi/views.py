@@ -117,7 +117,7 @@ class FindPlace(APIView):
         serializer = serializers.FindPlaceSerializer(data=request.data)
         serializer.is_valid()
         
-        find_places = await api_google.ApiGoogle().find_places(serializer.data["name"])
+        find_places = await api_google.ApiGoogle().afind_places(serializer.data["name"])
         if find_places:
             return Response({"places": find_places}, status=status.HTTP_200_OK)
         else:
@@ -132,7 +132,7 @@ class FindDistance(APIView):
         serializer = serializers.FindDistanceSerializer(data=request.data)
         serializer.is_valid()
 
-        find_distance = await api_google.ApiGoogle().find_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
+        find_distance = await api_google.ApiGoogle().afind_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
         if find_distance:
             return Response(find_distance, status=status.HTTP_200_OK)
         else:

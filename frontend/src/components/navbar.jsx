@@ -2,6 +2,7 @@ import React from "react";
 import Package from "../../package.json";
 import { NavLink } from "react-router-dom";
 // import "../css/navbar.css";
+import "../templates/css/styale.css";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
@@ -18,9 +19,9 @@ function Navbar({ user }) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html" id="loginButton">Login</a>
-                        <a class="nav-link" href="home.html">home</a>
-                        <a class="nav-link" href="Booked Travels.html">History</a>
+                        {user ? <p>{user.username}</p> : <NavLink class="nav-link" to="/login">Login</NavLink>}
+                        <NavLink class="nav-link" to="/home">home</NavLink>
+                        <NavLink class="nav-link" to="/travels/add">Book Taxi</NavLink>
                     </li>
                 </ul>
             </div>
