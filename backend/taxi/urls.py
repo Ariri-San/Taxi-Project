@@ -8,6 +8,7 @@ router.register('history', views.HistoryViewSet, basename='history')
 router.register('fixed_places', views.FixedPlacesViewSet, basename='fixed_places')
 
 
+
 api_url = [
     path('find_place/', views.FindPlace.as_view()),
     path('find_distance/', views.FindDistance.as_view()),

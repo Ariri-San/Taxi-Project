@@ -12,7 +12,7 @@ class ApiGoogle():
         self.gmaps = googlemaps.Client(key=key)
     
     
-    def find_places(self, name):
+    async def find_places(self, name):
         try:
             find_places = self.gmaps.places_autocomplete(name, components={'country': ['UK']})
             
@@ -24,12 +24,13 @@ class ApiGoogle():
             
             if find_places_2:
                 return find_places_2
+            
             return True
         except:
             return False
     
     
-    def find_distance(self, origin, destination):
+    async def find_distance(self, origin, destination):
         try:
             distance = self.gmaps.distance_matrix(origins=origin, destinations=destination)
             

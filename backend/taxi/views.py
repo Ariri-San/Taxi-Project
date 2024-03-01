@@ -1,4 +1,5 @@
 from django.db import transaction
+from asgiref.sync import sync_to_async, async_to_sync
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -111,11 +112,12 @@ class TravelToHistory(APIView):
 class FindPlace(APIView):
     permission_classes = [IsAuthenticated]
     
-    def post(self, request):
+    @async_to_sync
+    async def post(self, request):
         serializer = serializers.FindPlaceSerializer(data=request.data)
         serializer.is_valid()
         
-        find_places = api_google.ApiGoogle().find_places(serializer.data["name"])
+        find_places = await api_google.ApiGoogle().find_places(serializer.data["name"])
         if find_places:
             return Response({"places": find_places}, status=status.HTTP_200_OK)
         else:
@@ -125,11 +127,12 @@ class FindPlace(APIView):
 class FindDistance(APIView):
     permission_classes = [IsAuthenticated]
     
-    def post(self, request):
+    @async_to_sync
+    async def post(self, request):
         serializer = serializers.FindDistanceSerializer(data=request.data)
         serializer.is_valid()
 
-        find_distance = api_google.ApiGoogle().find_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
+        find_distance = await api_google.ApiGoogle().find_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
         if find_distance:
             return Response(find_distance, status=status.HTTP_200_OK)
         else:
