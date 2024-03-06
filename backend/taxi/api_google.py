@@ -42,7 +42,7 @@ class ApiGoogle():
             return True
         except:
             return False
-    afind_places = sync_to_async(find_places, thread_sensitive=False)
+    # afind_places = sync_to_async(find_places, thread_sensitive=False)
     
     
     def find_distance(self, origin, destination):
@@ -55,6 +55,6 @@ class ApiGoogle():
             return {"distance_meter": distance_meter, "duration": duration}
         except:
             return False
-    afind_distance = sync_to_async(find_distance, thread_sensitive=False)
+    # afind_distance = sync_to_async(find_distance, thread_sensitive=False)
     
         
