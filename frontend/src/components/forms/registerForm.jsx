@@ -45,7 +45,7 @@ class RegisterForm extends Form {
         <div class="form-group">
           {this.renderInput("password", "Password", "password")}
         </div>
-        {this.renderButton("Register")}
+        {this.renderButton("Register", this.buttonDisabled, "btn btn-success btn-block")}
         <p class="mt-3 text-center">Already have an account? <NavLink to="/login">Login</NavLink></p>
       </form>
     );

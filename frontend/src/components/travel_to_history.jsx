@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import TravelToHistoryForm from "./forms/travel_to_historyForm";
 import request from "../services/requestService";
 import getData from '../services/getData';
 import ShowData from '../base/showData';
@@ -36,12 +37,14 @@ async function setData(id, setState, state) {
 }
 
 
-function History(props) {
+function TravelToHistory(props) {
     const params = useParams();
     const navigate = useNavigate();
     const location = useLocation();
+    // const url = "travel/";
 
-    request.setUrl("history/");
+
+    request.setUrl("travel_to_history/");
 
     const [state, setState] = useState(0);
 
@@ -52,7 +55,24 @@ function History(props) {
 
     if (props.user) {
         if (state.data) return (
-            <ShowData data={state.data} showObjects={showObjects} name="arts"></ShowData>
+            <>
+                <ShowData url="travel/" data={state.data} showObjects={showObjects} name="arts"></ShowData>
+                <div className="row justify-content-center" style={{margin: "50px"}}>
+                    <div className="col-md-6">
+                        <div className="card">
+                            <div className="card-header text-center">
+                                <h3>Complite Travel</h3>
+                            </div>
+                            <div className="card-body">
+                                <TravelToHistoryForm
+                                    navigate={navigate}
+                                    toPath="/travel_to_history"
+                                /> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
         )
     }
     else {
@@ -61,4 +81,4 @@ function History(props) {
 
 }
 
-export default History;
+export default TravelToHistory;

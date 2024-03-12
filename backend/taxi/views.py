@@ -107,6 +107,13 @@ class TravelToHistory(APIView):
             travel.delete()
 
             return Response({"comment": "history saved"}, status=status.HTTP_201_CREATED)
+    
+    def get(self, request):
+        travels = models.Travel.objects.all()
+        serializer_travel = serializers.TravelSerializer(data=travels, many=True)
+        serializer_travel.is_valid()
+        
+        return Response(data=serializer_travel.data, status=status.HTTP_200_OK)
 
 
 class FindPlace(APIView):

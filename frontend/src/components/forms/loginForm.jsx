@@ -32,7 +32,7 @@ class LoginForm extends Form {
         <div class="form-group">
           {this.renderInput("password", "Password", "password")}
         </div>
-        {this.renderButton("Login", this.buttonDisabled)}
+        {this.renderButton("Login", this.buttonDisabled, "btn btn-primary btn-block")}
         <p class="mt-3 text-center">Don't have an account? <NavLink to="/register">Register</NavLink></p>
       </form>
     );

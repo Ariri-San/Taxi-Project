@@ -1,31 +1,37 @@
-import React from "react";
-import Package from "../../package.json";
+import React, { useState } from "react";
+// import Package from "../../package.json";
 import { NavLink } from "react-router-dom";
-// import "../css/navbar.css";
-import "../templates/css/styale.css";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
-const api = Package.proxy;
+// const api = Package.proxy;
+
+function check_path(state, path){
+    return state.path === path ? "active" : "";
+}
 
 
 function Navbar({ user }) {
-    return (
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a href="home.html">
-                {/* <img src="./img/Welwyn Airport Taxis Logo - Black with White Background 2.png" alt="Company Logo" style="width: 67px"> */}
-            </a>
-            <a class="navbar-brand" href="#">Welwyn Airport Taxis</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        {user ? <p>{user.username}</p> : <NavLink class="nav-link" to="/login">Login</NavLink>}
-                        <NavLink class="nav-link" to="/home">home</NavLink>
-                        <NavLink class="nav-link" to="/travels/add">Book Taxi</NavLink>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    const [state, setState] = useState({path:"home"});
+
+
+    return ( 
+        <nav className="navbar navbar-inverse">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <NavLink className="navbar-brand" to="/">Airport Taxis</NavLink>
+          </div>
+          <ul className="nav navbar-nav">
+            <li className={check_path(state, "home")}><NavLink onClick={() => setState({path:"home"})} to="/">Home</NavLink></li>
+            <li className={check_path(state, "travel")}>{user ? <NavLink onClick={() => setState({path:"travel"})} to="/travel">Travel</NavLink>: ""}</li>
+            <li className={check_path(state, "history")}>{user ? <NavLink onClick={() => setState({path:"history"})} to="/history">History</NavLink>: ""}</li>
+            {user && <li className={check_path(state, "travel_to_history")}>{user.is_admin ? <NavLink onClick={() => setState({path:"travel_to_history"})} to="/travel_to_history">Travel to History</NavLink>: ""}</li>}
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li className={check_path(state, "register")}>{user ? <p style={{color:"white", margin:"20px"}}>{user.username}</p> : <NavLink onClick={() => setState({path:"register"})} className="glyphicon glyphicon-user" to="/register"> Sign Up</NavLink>}</li>
+            <li className={check_path(state, "login")}>{user ? <NavLink className="glyphicon glyphicon-log-out" to="/logout"> Logout</NavLink> : <NavLink onClick={() => setState({path:"login"})} className="glyphicon glyphicon-log-in" to="/login"> Login</NavLink>}</li>
+          </ul>
+        </div>
+      </nav>
     );
 }
 
