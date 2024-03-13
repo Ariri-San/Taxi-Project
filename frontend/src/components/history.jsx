@@ -27,11 +27,13 @@ function showObjects(items) {
 }
 
 
-async function setData(id, setState, state) {
+
+async function setData(setState, state) {
     try {
-        if (!state) setState({ data: await getData(null, id), show: { description: true } });
+        setState({ ...state, data: await getData(), change: true });
     } catch (error) {
         request.showError(error);
+        setState({ ...state, change: true });
     }
 }
 
@@ -45,18 +47,13 @@ function History(props) {
 
     const [state, setState] = useState(0);
 
-    setData(params.id, setState, state);
-
-    // console.log(state);
-
-
-    if (props.user) {
-        if (state.data) return (
-            <ShowData data={state.data} showObjects={showObjects} name="arts"></ShowData>
-        )
-    }
+    if (!state.change) setData(setState, state);
     else {
-        return navigate("/")
+        if (props.user) {
+            if (state.data) return (
+                <ShowData data={state.data} showObjects={showObjects} name="arts"></ShowData>
+            );
+        }
     }
 
 }

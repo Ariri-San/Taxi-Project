@@ -20,7 +20,7 @@ class Form extends Component {
 
         try {
             const response = request.saveObject(this.setFormData(data, new FormData()), this.props.urlForm, this.props.id);
-
+            
             this.buttonDisabled = true;
             const results = await response;
 
@@ -44,20 +44,26 @@ class Form extends Component {
             return this.props.navigate(this.props.toPath);
 
         } catch (error) {
-            console.log(error)
-            if (error.response.data) {
-                const errorData = this.addErrors(error.response.data, {}), newError = {}
-                if (errorData["key"] === "0") toast.error(errorData["value"][0]);
-                else newError[errorData["key"]] = errorData["value"];
-                this.setState({ errors: newError });
-
-                // console.log(error);
-                toast.error(error.response.statusText);
-            };
-
-            await new Promise(resolve => setTimeout(resolve, 500))
-            this.buttonDisabled = false;
-            this.props.navigate();
+            if (error.response){
+                console.log(error)
+                if (error.response.data) {
+                    const errorData = this.addErrors(error.response.data, {}), newError = {}
+                    if (errorData["key"] === "0") toast.error(errorData["value"][0]);
+                    else newError[errorData["key"]] = errorData["value"];
+                    this.setState({ errors: newError });
+    
+                    // console.log(error);
+                    toast.error(error.response.statusText);
+                };
+    
+                await new Promise(resolve => setTimeout(resolve, 500))
+                this.buttonDisabled = false;
+                this.props.navigate();
+            }
+            else {
+                this.buttonDisabled = false;
+                return toast.error("server is ofline");
+            }
         }
     };
 

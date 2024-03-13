@@ -29,10 +29,6 @@ function Travel(props) {
             </div>
         );
     }
-    else {
-        return navigate("/")
-    }
-
 }
 
 export default Travel;

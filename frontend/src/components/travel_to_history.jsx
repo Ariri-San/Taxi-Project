@@ -73,10 +73,7 @@ function TravelToHistory(props) {
                     </div>
                 </div>
             </>
-        )
-    }
-    else {
-        return navigate("/")
+        );
     }
 
 }
