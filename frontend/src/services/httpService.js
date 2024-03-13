@@ -1,6 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import auth from "./authService";
+import config from "../config.json";
+
+var token_name = config.TokenName;
 
 setJwt(auth.getaccessJwt());
 
@@ -23,7 +26,7 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 function setJwt(jwt) {
-    if (jwt) axios.defaults.headers.common["Authorization"] = "JWT " + jwt;
+    if (jwt) axios.defaults.headers.common["Authorization"] = token_name + " " + jwt;
 }
 
 const functions = {

@@ -14,9 +14,8 @@ class Form extends Component {
 
 
     doSubmit = async (data) => {
-        if (this.props.onSubmit) {
-            return this.props.onSubmit(this.state);
-        }
+        if (this.props.onSubmit) return this.props.onSubmit(this.state);
+        else if ( this.onSubmit) return this.onSubmit(data);
 
         try {
             const response = request.saveObject(this.setFormData(data, new FormData()), this.props.urlForm, this.props.id);

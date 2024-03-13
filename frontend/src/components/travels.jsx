@@ -47,12 +47,8 @@ async function setData(setState, state) {
 }
 
 
-function History(props) {
-    const params = useParams();
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    request.setUrl("history/");
+function Travels(props) {
+    request.setUrl("travel/");
 
     const [state, setState] = useState(0);
 
@@ -60,11 +56,11 @@ function History(props) {
     else {
         if (props.user) {
             if (state.data) return (
-                <ShowData data={state.data} showObjects={showObjects} name="histories"></ShowData>
+                <ShowData data={state.data} showObjects={showObjects} name="travels"></ShowData>
             );
         }
     }
 
 }
 
-export default History;
+export default Travels;

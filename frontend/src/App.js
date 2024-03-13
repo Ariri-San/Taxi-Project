@@ -12,6 +12,9 @@ import SimpleMap from "./components/map";
 import Travel from "./components/travel";
 import History from "./components/history";
 import TravelToHistory from "./components/travel_to_history";
+import Home from "./components/home";
+import travels from "./components/travels";
+import Travels from "./components/travels";
 
 
 class App extends Component {
@@ -38,9 +41,11 @@ class App extends Component {
         <ToastContainer />
         <Navbar user={this.state.user} />
         <Routes>
-          {/* <Route path="/" element={<Home />}></Route> */}
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/map" element={<SimpleMap />}></Route>
           <Route path="/history" element={<History user={this.state.user} />}></Route>
           <Route path="/travel" element={<Travel user={this.state.user} />}></Route>
+          <Route path="/travels" element={<Travels user={this.state.user} />}></Route>
           <Route path="/travel_to_history" element={<TravelToHistory user={this.state.user} />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>

@@ -48,6 +48,12 @@ class FixedPrice(models.Model):
         return f"{self.name} - {self.formated_address}"
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=511)
+    lat = models.DecimalField(max_digits=12, decimal_places=8)
+    lng = models.DecimalField(max_digits=12, decimal_places=8)
+
+
 class Travel(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETE = 'C'
@@ -70,8 +76,8 @@ class Travel(models.Model):
     date_return = models.DateField(blank=True, null=True)
     present = models.DateTimeField(auto_now_add=True)
     travel_code = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, max_length=36)
-    origin = models.CharField(max_length=511)
-    destination = models.CharField(max_length=511)
+    origin = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="travel_origin")
+    destination = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="travel_destination")
     payment_status = models.CharField(
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
     
@@ -91,8 +97,8 @@ class History(models.Model):
     date_return = models.DateField(blank=True, null=True)
     confirmed = models.DateTimeField(auto_now_add=True)
     travel_code = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, max_length=36)
-    origin = models.CharField(max_length=511)
-    destination = models.CharField(max_length=511)
+    origin = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="history_origin")
+    destination = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="history_destination")
     
     def __str__(self) -> str:
         return f"{self.user} : {self.distance} mile = {self.price}$"

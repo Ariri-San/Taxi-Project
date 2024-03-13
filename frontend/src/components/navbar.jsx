@@ -22,7 +22,8 @@ function Navbar({ user }) {
         </div>
         <ul className="nav navbar-nav">
           <li className={check_path(state, "home")}><NavLink onClick={() => setState({path:"home"})} to="/">Home</NavLink></li>
-          <li className={check_path(state, "travel")}>{user ? <NavLink onClick={() => setState({path:"travel"})} to="/travel">Travel</NavLink>: ""}</li>
+          <li className={check_path(state, "travel")}>{user ? <NavLink onClick={() => setState({path:"travel"})} to="/travel">Book Taxi</NavLink>: ""}</li>
+          <li className={check_path(state, "travels")}>{user ? <NavLink onClick={() => setState({path:"travels"})} to="/travels">Travels</NavLink>: ""}</li>
           <li className={check_path(state, "history")}>{user ? <NavLink onClick={() => setState({path:"history"})} to="/history">History</NavLink>: ""}</li>
           {user && <li className={check_path(state, "travel_to_history")}>{user.is_admin ? <NavLink onClick={() => setState({path:"travel_to_history"})} to="/travel_to_history">Travel to History</NavLink>: ""}</li>}
         </ul>

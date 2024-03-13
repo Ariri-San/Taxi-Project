@@ -14,16 +14,16 @@ class ApiGoogle():
     
     
     def find_place(self, name):
-        try:
-            find_places = self.gmaps.places_autocomplete(name, components={'country': ['UK']})
+        # try:
+            find_places = self.gmaps.find_place(name, "textquery")["candidates"]
             
             for place in find_places:
-                if name == place["description"]:
-                    return True
-            
+                place_2 = self.gmaps.place(place["place_id"])["result"]
+                if place_2["formatted_address"] in name or name in place_2["formatted_address"]:
+                    return name, place_2["geometry"]["location"]["lat"], place_2["geometry"]["location"]["lng"]
             return False
-        except:
-            return False
+        # except:
+        #     return False
     
     
     def find_places(self, name):

@@ -1,3 +1,5 @@
 {
-    "BaseUrl": "http://localhost:8000/"
+    "BaseUrl": "http://localhost:8000/",
+    "TokenName": "JWT",
+    "TokenApiMap": "AIzaSyDEnymewL5xuqEqp3baWmzXley4_iUdYdk"
 }

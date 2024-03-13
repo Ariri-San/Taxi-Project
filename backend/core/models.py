@@ -7,5 +7,5 @@ from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
     email = models.EmailField()
-    phone = models.PositiveSmallIntegerField()
+    phone = models.PositiveSmallIntegerField(blank=True, null=True)
 

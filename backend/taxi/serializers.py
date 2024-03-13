@@ -3,8 +3,16 @@ from rest_framework import serializers
 from . import models, api_google
 
 
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Location
+        fields = ["name", "lat", "lng"]
+
 
 class TravelSerializer(serializers.ModelSerializer):
+    origin = LocationSerializer(read_only=True)
+    destination = LocationSerializer(read_only=True)
+    
     class Meta:
         model = models.Travel
         fields = ['id', 'user', 'price', 'date', 'date_return', 'passengers', 'luggage' ,'present', 'origin', 'destination', 'payment_status', 'travel_code']
@@ -37,7 +45,7 @@ class CreateTravelSerializer(serializers.ModelSerializer):
             if joined_price.day_of_week == day:
                 
                 if start < finish:
-                    if start < time < finish:
+                    if start <= time <= finish:
                         return joined_price
                 else:
                     if time > start or time < finish:
@@ -64,8 +72,11 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         if "date" not in validated_data:
             validated_data["date"] = datetime.date.today()
         
-        price_miles = models.PriceMile.objects.filter(is_active=True).all()
-        price_mile = price_miles[0]
+        try:
+            price_miles = models.PriceMile.objects.filter(is_active=True).all()
+            price_mile = price_miles[0]
+        except:
+            raise serializers.ValidationError('Price Mile dose not exist contact to support service.')
         
         joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
         try:
@@ -73,26 +84,36 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         except:
             raise serializers.ValidationError('Price dose not exist contact to support service.')
         
-        origin = validated_data["origin"]
-        destination = validated_data["destination"]
+        google_map = api_google.ApiGoogle()
         
-        distance_meter = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        origin_name, lat_origin, lng_origin = google_map.find_place(validated_data["origin"])
+        origin, _ = models.Location.objects.get_or_create(name=origin_name, lat=lat_origin, lng=lng_origin)
+        destination_name, lat_destination, lng_destination = google_map.find_place(validated_data["destination"])
+        destination, _ = models.Location.objects.get_or_create(name=destination_name, lat=lat_destination, lng=lng_destination)
+        
+        
+        distance_meter = api_google.ApiGoogle().find_distance(origin=origin_name, destination=destination_name)
         if not distance_meter:
             raise serializers.ValidationError('Can Not Create Travel.')
         mile = float(distance_meter["distance_meter"]) * 0.000621371
         
-        fixed_price = self.check_fixed_price(origin, destination)
+        fixed_price = self.check_fixed_price(origin_name, destination_name)
         if fixed_price:
             price = fixed_price
         else:
             price = float(joined_price) * mile
         
+        
+        validated_data["origin"] = origin
+        validated_data["destination"] = destination
         return models.Travel.objects.create(**validated_data,
                                             price=price,
                                             user_id=self.context["user_id"],
                                             distance=mile,
                                             price_per_mile=float(joined_price))
-        
+    
+    origin = serializers.CharField(max_length=511)
+    destination = serializers.CharField(max_length=511)
     
     class Meta:
         model = models.Travel
@@ -103,19 +124,27 @@ class CreateTravelSerializer(serializers.ModelSerializer):
 
 
 class UpdateAdminTravelSerializer(serializers.ModelSerializer):
+    origin = LocationSerializer()
+    destination = LocationSerializer()
 
     class Meta:
         model = models.Travel
         fields = ['payment_status', 'price', 'date', 'date_return', 'passengers', 'luggage', 'origin', 'destination']
 
 
-class UpdateUserTravelSerializer(serializers.ModelSerializer):    
+class UpdateUserTravelSerializer(serializers.ModelSerializer):
+    origin = LocationSerializer()
+    destination = LocationSerializer()
+      
     class Meta:
         model = models.Travel
         fields = ['passengers', 'luggage', 'date', 'date_return']        
 
 
 class HistorySerializer(serializers.ModelSerializer):
+    origin = LocationSerializer(read_only=True)
+    destination = LocationSerializer(read_only=True)
+    
     class Meta:
         model = models.History
         fields = ['id', 'user', 'price', 'date', 'date_return', 'passengers', 'luggage', 'confirmed', 'origin', 'destination', 'travel_code']
