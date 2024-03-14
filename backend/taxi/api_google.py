@@ -1,6 +1,8 @@
 import googlemaps
 import os
 import environ
+import datetime
+from . import models
 # from asgiref.sync import async_to_sync, sync_to_async
 
 env = environ.Env()
@@ -11,6 +13,44 @@ class ApiGoogle():
     def __init__(self) -> None:
         key = os.environ['KEY']
         self.gmaps = googlemaps.Client(key=key)
+        
+
+    def check_day(self, joined_prices):
+        now = datetime.datetime.now()
+        day = now.isoweekday()
+        if day == 7:
+            day = "S"
+        else:
+            day = "O"
+        time = now.time()
+        
+        for joined_price in joined_prices:
+            start = joined_price.priceday.start
+            finish = joined_price.priceday.finish
+            if joined_price.day_of_week == day:
+                
+                if start < finish:
+                    if start <= time <= finish:
+                        return joined_price
+                else:
+                    if time > start or time < finish:
+                        return joined_price
+    
+    
+    def check_fixed_price(self, origin, destination):
+        fixed_origin = models.FixedPrice.objects.filter(formated_address=origin).all()
+        fixed_destination = models.FixedPrice.objects.filter(formated_address=destination).all()
+        
+        price = 0
+        if fixed_origin:
+            price = fixed_origin[0].price
+        if fixed_destination:
+            if fixed_destination[0].price > price:
+                price = fixed_destination[0].price
+        if price > 0:
+            return price
+        else:
+            return False
     
     
     def find_place(self, name):
@@ -49,10 +89,29 @@ class ApiGoogle():
         try:
             distance = self.gmaps.distance_matrix(origins=origin, destinations=destination)
             
-            distance_meter = distance["rows"][0]["elements"][0]["distance"]["value"]
+            meter = distance["rows"][0]["elements"][0]["distance"]["value"]
             duration = distance["rows"][0]["elements"][0]["duration"]["text"]
+            mile = float(meter) * 0.000621371
             
-            return {"distance_meter": distance_meter, "duration": duration}
+            
+            #  ---- Get PriceMile ---- 
+            price_miles = models.PriceMile.objects.filter(is_active=True).all()
+            price_mile = price_miles[0]
+            
+            
+            #  ---- Get JoinedPrice ---- 
+            joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
+            joined_price = self.check_day(joined_prices).priceday.price
+
+            #  ---- Find Price Travel ---- 
+            fixed_price = self.check_fixed_price(origin, destination)
+            if fixed_price:
+                price = fixed_price
+            else:
+                price = float(joined_price) * mile
+            
+            
+            return {"meter": round(meter, 1)  , "mile": round(mile, 2)  , "duration": duration, "price": round(price, 3)  , "price_per_mile": float(joined_price)}
         except:
             return False
     # afind_distance = sync_to_async(find_distance, thread_sensitive=False)

@@ -17,7 +17,9 @@ class TravelForm extends Form {
         list_origin: [],
         list_destination: [],
         location_origin: {},
-        location_destination: {}
+        location_destination: {},
+        check_show:{ date: false, date_return: false, price: false},
+        distance_data: {}
     };
 
     schema = {
@@ -75,7 +77,6 @@ class TravelForm extends Form {
                     }
                 }
             }
-            console.log(this.state)
 
             if (e.target.id === "origin") {
                 this.setState({ list_origin: list_places });
@@ -83,6 +84,20 @@ class TravelForm extends Form {
             else this.setState({ list_destination: list_places });
 
         }
+    }
+
+    show_price= async() => {
+        if (this.state.data.origin && this.state.data.destination){
+            this.setState({check_show: {...this.state.check_show, price: true}});
+            var response = await request.saveObject({ "origin": this.state.data.origin , "destination": this.state.data.destination }, "find_distance/");
+            this.setState({distance_data: response.data, buttonDisabled: true});
+        }
+    }
+
+    chenge_check_box = (e) => {
+        if (e.target.id=== "returnTravel") this.setState({check_show: {...this.state.check_show, date_return: !this.state.check_show.date_return}});
+        else if (e.target.id=== "pickUpASAP") this.setState({check_show: {...this.state.check_show, date: false}});
+        else if (e.target.id=== "pickUpLater") this.setState({check_show: {...this.state.check_show, date: true}});
     }
 
 
@@ -121,16 +136,49 @@ class TravelForm extends Form {
                         </div>
 
                         <div class="form-group">
-                            {this.renderInput("date", "Date", "date")}
+                            <label for="pickUpOption">Pick-up Option:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="pickUpOption" id="pickUpASAP" value="ASAP" checked={!this.state.check_show.date} onClick={this.chenge_check_box}/>
+                                <label class="form-check-label" for="pickUpASAP">
+                                    Pick-up ASAP
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="pickUpOption" id="pickUpLater" value="Later"  checked={this.state.check_show.date} onClick={this.chenge_check_box}/>
+                                <label class="form-check-label" for="pickUpLater">
+                                    Pick-up Later
+                                </label>
+                                <div class="form-group" id="pickUpLaterDateField" style={{display: this.state.check_show.date ? "block" : "none"}}>
+                                    <label for="pickUpLaterDate">Pick-up Date:</label>
+                                    {this.renderInput("date", "Date", "date")}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            {this.renderInput("date_return", "Return Date", "date")}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="returnTravel" name="returnTravel" onClick={this.chenge_check_box} checked={this.state.check_show.date_return}/>
+                                <label class="form-check-label" for="returnTravel">
+                                    Return Travel Required
+                                </label>
+                                <div class="form-group" id="returnDateField" style={{display: this.state.check_show.date_return ? "block" : "none"}}>
+                                    {this.renderInput("date_return", "Return Date", "date")}
+                                </div>
+                            </div>
                         </div>
-                        {this.renderButton("Generate")}
-                        {/* <button type="button" class="btn btn-primary" id="generateButton">Generate</button> */}
+
+                        <button disabled={this.validate()} type="button" class="btn btn-primary" id="generateButton" onClick={this.show_price}>Gnarate</button>
+
+                        <div id="priceDisplay" style={{display: this.state.check_show.price ? "block" : "none"}}>
+                            <h4>Estimated Price:</h4>
+                            <p id="priceAmount">Price Per Mile: {this.state.distance_data.price_per_mile} £ - Price: {this.state.distance_data.price} £</p>
+                            <p id="duration">Mile: {this.state.distance_data.mile} - Duration: {this.state.distance_data.duration}</p>
+                        </div>
+
+                        {this.renderButton("Book Taxi", false, "btn btn-primary", {display: this.state.buttonDisabled ? "" : "none"})}
                     </form>
                 </div>
+
                 {(this.state.location_destination.lat || this.state.location_origin.lat) ? 
                     <div>
                         <StaticGoogleMap size="400x600" className="img-fluid" apiKey={token_api}>

@@ -138,8 +138,12 @@ class FindDistance(APIView):
     def post(self, request):
         serializer = serializers.FindDistanceSerializer(data=request.data)
         serializer.is_valid()
+        
+        origin = serializer.data["origin"]
+        destination = serializer.data["destination"]
 
-        find_distance = api_google.ApiGoogle().find_distance(origin=serializer.data["origin"], destination=serializer.data["destination"])
+        find_distance = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        
         if find_distance:
             return Response(find_distance, status=status.HTTP_200_OK)
         else:

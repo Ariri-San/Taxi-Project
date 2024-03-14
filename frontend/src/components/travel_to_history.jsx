@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
-import TravelToHistoryForm from "./forms/travel_to_historyForm";
+import { useLocation, useNavigate} from "react-router";
 import {StaticGoogleMap, Marker} from 'react-static-google-map';
 import request from "../services/requestService";
 import getData from '../services/getData';
@@ -79,7 +78,6 @@ async function setData(setState, state) {
 
 
 function TravelToHistory(props) {
-    // const url = "travel/";
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -99,8 +97,8 @@ function TravelToHistory(props) {
                 <ShowData
                     url="travel/"
                     data={state.data}
-                    showObjects={(navigate, location) => showObjects(navigate, location, state.data)}
-                    name="arts"
+                    showObjects={() => showObjects(navigate, location, state.data)}
+                    name="travels"
                 ></ShowData>
             </>
         );
