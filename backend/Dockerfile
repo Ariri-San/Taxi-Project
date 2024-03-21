@@ -8,13 +8,16 @@ RUN pip install --upgrade pip
 RUN pip install pipenv
 
 # Install application dependencies
-COPY Pipfile Pipfile.lock /app/backend/
+COPY Pipfile Pipfile.lock ./
 # We use the --system flag so packages are installed into the system python
 # and not into a virtualenv. Docker containers don't need virtual environments. 
 RUN pipenv install --system --dev
 
 # Copy the application files into the image
-COPY . /app/backend/
+COPY . .
 
 # Expose port 8000 on the container
 EXPOSE 8000
+
+# RUN python manage.py migrate
+# CMD [ "python", "manage.py", "runserver" , "0.0.0.0:8000"]

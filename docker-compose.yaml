@@ -1,6 +1,14 @@
 version: "3.8"
 
 services:
+  backend:
+    build: ./backend
+    ports: 
+      - 8000:8000
+    command: ./docker-entrypoint.sh
+    # volumes:
+    #   - taxi:/data
+  
   frontend:
     depends_on:
       - backend
@@ -8,13 +16,5 @@ services:
     ports:
       - 3000:3000
 
-  backend:
-    build: ./backend
-    ports: 
-      - 8000:8000
-    command: ./docker-entrypoint.sh
-    volumes:
-      - taxi:/data
-
-volumes:
-  taxi:
+# volumes:
+#   taxi:
