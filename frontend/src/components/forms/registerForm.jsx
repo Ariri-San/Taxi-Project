@@ -24,8 +24,8 @@ class RegisterForm extends Form {
       .label("Email"),
     phone: Joi.string()
       .required()
-      .min(10)
-      .max(15)
+      .min(13)
+      .max(13)
       .label("Phone")
   };
 

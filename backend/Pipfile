@@ -24,6 +24,8 @@ dj-database-url = "*"
 django-environ = "*"
 eventlet = "*"
 googlemaps = "*"
+phonenumbers = "*"
+django-phonenumber-field = "*"
 
 [dev-packages]
 autopep8 = "*"
