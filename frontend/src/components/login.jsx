@@ -15,7 +15,7 @@ function doResults(data, results) {
 
 function Login(props) {
     const navigate = useNavigate();
-    const url = "auth/jwt/create";
+    const url = "auth/jwt/create/";
 
     return (
         <React.Fragment>
