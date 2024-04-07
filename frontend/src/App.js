@@ -15,7 +15,6 @@ import TravelToHistory from "./components/travel_to_history";
 import History from "./components/history";
 import SimpleMap from "./components/map"
 import Footer from "./components/footer";
-import SimpleMap from './components/map';
 
 
 class App extends Component {
