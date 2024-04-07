@@ -13,7 +13,7 @@ async function doResults(data, results) {
 
 function Register(props) {
     const navigate = useNavigate();
-    const url = "auth/users/";
+    const url = "auth/users";
 
     return (
         <React.Fragment>
