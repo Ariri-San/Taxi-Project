@@ -135,7 +135,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['168.119.251.176']
+ALLOWED_HOSTS = ['168.119.251.176', '127.0.0.1']
 
 INTERNAL_IPS = [
     # ...
@@ -144,7 +144,8 @@ INTERNAL_IPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://168.119.251.176:3000'
+    'http://168.119.251.176:3000',
+    'http://localhost:3000'
 ]
 
 
