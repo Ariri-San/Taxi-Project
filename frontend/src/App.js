@@ -8,7 +8,6 @@ import Navbar from "./components/navbar";
 import Register from "./components/register";
 import Login from "./components/login";
 import Logout from "./components/logout";
-import SimpleMap from "./components/map";
 import Travel from "./components/travel";
 import History from "./components/history";
 import TravelToHistory from "./components/travel_to_history";
