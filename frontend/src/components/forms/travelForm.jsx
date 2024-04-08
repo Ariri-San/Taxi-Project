@@ -150,7 +150,7 @@ class TravelForm extends Form {
                                 </label>
                                 <div class="form-group" id="pickUpLaterDateField" style={{display: this.state.check_show.date ? "block" : "none"}}>
                                     <label for="pickUpLaterDate">Pick-up Date:</label>
-                                    {this.renderInput("date", "Date", "date")}
+                                    {this.renderInput("date", "Date", "datetime-local")}
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@ class TravelForm extends Form {
                                     Return Travel Required
                                 </label>
                                 <div class="form-group" id="returnDateField" style={{display: this.state.check_show.date_return ? "block" : "none"}}>
-                                    {this.renderInput("date_return", "Return Date", "date")}
+                                    {this.renderInput("date_return", "Return Date", "datetime-local")}
                                 </div>
                             </div>
                         </div>
