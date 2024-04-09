@@ -3,7 +3,9 @@ import React from "react";
 function Home(props) {
     return(
         <div class="container">
+              <Helmet>
             <title>Home</title>
+            </Helmet>
             <h3>making us the preferred choice for both short and</h3>
             <br/>
             <p>
