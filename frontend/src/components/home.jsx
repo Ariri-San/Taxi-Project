@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 function Home(props) {
     useEffect(() => {
         document.title = "Home";
-    }, []);
+    }, []); // This effect runs only once after the component mounts
 
     return (
         <div className="container">
@@ -40,10 +40,7 @@ function Home(props) {
                 <br/>
                 your transportation needs.
             </p>
-
-            {/* Add the link tag for the icon in the head section */}
-            <img src="../templates/img/Welwyn+Airport+Taxis+Logo+-+Black+with+White+Background+-+5000x5000.png" alt="Icon" className="img-icon" />
-            </div>
+        </div>
     );
 }
 
