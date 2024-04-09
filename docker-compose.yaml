@@ -4,7 +4,7 @@ services:
   backend:
     build: ./backend
     ports: 
-      - 8000:8000
+      - 8000:80
     # command: ./docker-entrypoint.sh
     # volumes:
     #   - taxi:/data
