@@ -89,11 +89,12 @@ class TravelForm extends Form {
     show_price= async() => {
         if (this.state.data.origin && this.state.data.destination){
             this.setState({check_show: {...this.state.check_show, price: true}});
+            var date_return = this.state.check_show.date_return ? this.state.data.date_return : "";
             var response = await request.saveObject({
                     "origin": this.state.data.origin,
                     "destination": this.state.data.destination,
                     "date": this.state.data.date,
-                    "date_return": this.state.data.date_return
+                    "date_return": date_return,
                 }, "find_distance/");
             this.setState({distance_data: response.data, buttonDisabled: true});
         }

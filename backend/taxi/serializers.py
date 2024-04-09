@@ -33,6 +33,10 @@ class CreateTravelSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if "date" not in validated_data:
             validated_data["date"] = datetime.datetime.today()
+        if "date_return" not in validated_data:
+            date_return = False
+        else:
+            date_return = validated_data["date_return"]
         
         google_map = api_google.ApiGoogle()
         
@@ -45,7 +49,7 @@ class CreateTravelSerializer(serializers.ModelSerializer):
             origin=origin_name,
             destination=destination_name,
             date=validated_data["date"],
-            date_return=validated_data["date_return"]
+            date_return=date_return
             )
         
         if not distance:
@@ -113,9 +117,11 @@ class FindPlaceSerializer(serializers.Serializer):
 class FindDistanceSerializer(serializers.Serializer):
     origin = serializers.CharField(label="Origin", required=True, max_length=511)
     destination = serializers.CharField(label="Destination", required=True, max_length=511)
+    date = serializers.DateTimeField(label="Date")
+    date_return = serializers.DateTimeField(label="Date Return")
     
     class Meta:
-        fields = ["origin", "destination"]
+        fields = ["origin", "destination", "date", "date_return"]
 
     
 class GetTravelSerializer(serializers.Serializer):

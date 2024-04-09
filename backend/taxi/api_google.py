@@ -86,7 +86,7 @@ class ApiGoogle():
     
     
     def find_distance(self, origin, destination, date, date_return):
-        # try:
+        try:
             distance = self.gmaps.distance_matrix(origins=origin, destinations=destination)
             
             meter = distance["rows"][0]["elements"][0]["distance"]["value"]
@@ -114,8 +114,8 @@ class ApiGoogle():
             
             
             return {"meter": round(meter, 1)  , "mile": round(mile, 2)  , "duration": duration, "price": round(price, 3)  , "price_per_mile": float(joined_price)}
-        # except:
-        #     return False
+        except:
+            return False
     # afind_distance = sync_to_async(find_distance, thread_sensitive=False)
     
         

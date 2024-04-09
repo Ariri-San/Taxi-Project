@@ -1,3 +1,4 @@
+import datetime
 from django.db import transaction
 # from asgiref.sync import sync_to_async, async_to_sync
 from rest_framework import status
@@ -143,6 +144,22 @@ class FindDistance(APIView):
         destination = serializer.data["destination"]
         date = serializer.data["date"]
         date_return = serializer.data["date_return"]
+        
+        if not date:
+            date = datetime.datetime.now()
+        else:
+            try:
+                date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M')
+            except:
+                date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
+            
+        if date_return:
+            try:
+                date_return = datetime.datetime.strptime(date_return, '%Y-%m-%dT%H:%M')
+            except:
+                date_return = datetime.datetime.strptime(date_return, '%Y-%m-%dT%H:%M:%SZ')
+            
+        
 
         find_distance = api_google.ApiGoogle().find_distance(origin=origin, destination=destination, date=date, date_return=date_return)
         
