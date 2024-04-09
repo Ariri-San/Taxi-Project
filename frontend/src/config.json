@@ -1,6 +1,6 @@
 {
-    "BaseUrl": "http://168.119.251.176:80/",
-    "BaseUrlLocal": "http://127.0.0.1:80/",
+    "BaseUrl": "http://168.119.251.176:8000/",
+    "BaseUrlLocal": "http://127.0.0.1:8000/",
     "TokenName": "JWT",
     "TokenApiMap": "AIzaSyDEnymewL5xuqEqp3baWmzXley4_iUdYdk"
 }
