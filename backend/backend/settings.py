@@ -144,7 +144,7 @@ INTERNAL_IPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'https://168.119.251.176:3000',
+    'http://168.119.251.176:3000',
     'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
