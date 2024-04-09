@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 function Home(props) {
     useEffect(() => {
         document.title = "Home";
-    }, []); // This effect runs only once after the component mounts
+    }, []);
 
     return (
         <div className="container">
