@@ -42,8 +42,8 @@ function Home(props) {
             </p>
 
             {/* Add the link tag for the icon in the head section */}
-            <link rel="png" href="../templates/img/Welwyn+Airport+Taxis+Logo+-+Black+with+White+Background+-+5000x5000.png" />
-        </div>
+            <img src="../templates/img/Welwyn+Airport+Taxis+Logo+-+Black+with+White+Background+-+5000x5000.png" alt="Icon" className="img-icon" />
+            </div>
     );
 }
 
