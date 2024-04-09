@@ -15,14 +15,14 @@ class ApiGoogle():
         self.gmaps = googlemaps.Client(key=key)
         
 
-    def check_day(self, joined_prices):
-        now = datetime.datetime.now()
-        day = now.isoweekday()
+    def check_datetime(self, joined_prices, datetime):
+        # now = datetime.datetime.now()
+        day = datetime.isoweekday()
         if day == 7:
             day = "S"
         else:
             day = "O"
-        time = now.time()
+        time = datetime.time()
         
         for joined_price in joined_prices:
             start = joined_price.priceday.start
@@ -85,8 +85,8 @@ class ApiGoogle():
     # afind_places = sync_to_async(find_places, thread_sensitive=False)
     
     
-    def find_distance(self, origin, destination):
-        try:
+    def find_distance(self, origin, destination, date, date_return):
+        # try:
             distance = self.gmaps.distance_matrix(origins=origin, destinations=destination)
             
             meter = distance["rows"][0]["elements"][0]["distance"]["value"]
@@ -101,7 +101,9 @@ class ApiGoogle():
             
             #  ---- Get JoinedPrice ---- 
             joined_prices = models.JoinedPrice.objects.filter(pricemile=price_mile)
-            joined_price = self.check_day(joined_prices).priceday.price
+            joined_price = self.check_datetime(joined_prices, date).priceday.price
+            if date_return:
+                joined_price += self.check_datetime(joined_prices, date_return).priceday.price
 
             #  ---- Find Price Travel ---- 
             fixed_price = self.check_fixed_price(origin, destination)
@@ -112,8 +114,8 @@ class ApiGoogle():
             
             
             return {"meter": round(meter, 1)  , "mile": round(mile, 2)  , "duration": duration, "price": round(price, 3)  , "price_per_mile": float(joined_price)}
-        except:
-            return False
+        # except:
+        #     return False
     # afind_distance = sync_to_async(find_distance, thread_sensitive=False)
     
         

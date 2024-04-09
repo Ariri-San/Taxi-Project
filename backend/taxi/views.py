@@ -141,8 +141,10 @@ class FindDistance(APIView):
         
         origin = serializer.data["origin"]
         destination = serializer.data["destination"]
+        date = serializer.data["date"]
+        date_return = serializer.data["date_return"]
 
-        find_distance = api_google.ApiGoogle().find_distance(origin=origin, destination=destination)
+        find_distance = api_google.ApiGoogle().find_distance(origin=origin, destination=destination, date=date, date_return=date_return)
         
         if find_distance:
             return Response(find_distance, status=status.HTTP_200_OK)
