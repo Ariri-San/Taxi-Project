@@ -1,12 +1,8 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 
 function Home(props) {
     return(
-        <div className="container">
-            <Helmet>
-                <title>Home</title>
-            </Helmet>
+        <div class="container">
             <h3>making us the preferred choice for both short and</h3>
             <br/>
             <p>
@@ -26,7 +22,7 @@ function Home(props) {
                 <br/>
                 traveling with Welwyn Airport Taxis.
             </p>
-            <img src={require("../templates/img/photo_2024-03-07_14-09-14.jpg")} alt="" className="img-car"/>
+            <img src={require("../templates/img/photo_2024-03-07_14-09-14.jpg")} alt="" class="img-car"/>
             <p>
                 If you prefer to speak with one of our
                 <br/>
