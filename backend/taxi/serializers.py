@@ -1,4 +1,5 @@
 import datetime
+import pytz
 from rest_framework import serializers
 from . import models, api_google
 
@@ -30,13 +31,26 @@ class CreateTravelSerializer(serializers.ModelSerializer):
         return destination
     
     
-    def create(self, validated_data):
+    def check_times(self, validated_data):
+        now = datetime.datetime.today().replace(tzinfo=pytz.UTC)
+        
         if "date" not in validated_data:
-            validated_data["date"] = datetime.datetime.today()
+            validated_data["date"] = now
+        else:
+            if validated_data["date"] < now:
+                raise serializers.ValidationError({"date": ['Please Enter Currect Date.']})
+
         if "date_return" not in validated_data:
             date_return = False
         else:
+            if validated_data["date_return"] <= validated_data["date"]:
+                raise serializers.ValidationError({"date_return": ['Please Enter Currect Date Return.']})
             date_return = validated_data["date_return"]
+        
+        return date_return
+    
+    def create(self, validated_data):
+        date_return = self.check_times(validated_data)
         
         google_map = api_google.ApiGoogle()
         

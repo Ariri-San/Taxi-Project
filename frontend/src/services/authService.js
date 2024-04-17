@@ -19,12 +19,15 @@ export async function login(username, password) {
 export async function setRefreshToken() {
     try {
         const token = localStorage.getItem(refresh);
-        const { data: jwt } = await http.post(apiEndpoint + "refresh/", {
-            refresh: token,
-        });
+        if (token)
+        {
+            const { data: jwt } = await http.post(apiEndpoint + "refresh/", {
+                refresh: token,
+            });
 
-        localStorage.setItem(access, jwt.access);
-        http.setJwt(jwt.access);
+            localStorage.setItem(access, jwt.access);
+            http.setJwt(jwt.access);
+        }
     } catch (error) {
         logout();
         window.location.replace(window.location.origin);
