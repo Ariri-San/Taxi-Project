@@ -144,6 +144,7 @@ INTERNAL_IPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
+    'http://welwynairporttaxiltd.com',
     'http://168.119.251.176',
     'http://168.119.251.176:80',
     'http://168.119.251.176:3000',
