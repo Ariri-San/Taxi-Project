@@ -6,8 +6,8 @@ import LoginForm from "./forms/loginForm";
 
 
 
-function doResults(data, results) {
-    auth.loginWithJwt(results.data.access, results.data.refresh);
+async function doResults(data, results) {
+    await auth.loginWithJwt(results.data.access, results.data.refresh);
     window.location = "/";
 }
 
