@@ -14,7 +14,7 @@ services:
       - backend
     build: ./frontend
     ports:
-      - 80:3000
+      - 443:3000
 
 # volumes:
 #   taxi:

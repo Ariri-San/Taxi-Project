@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
 function Home(props) {
-    useEffect(() => {
-        document.title = "Home";
-    }, []);
+    // useEffect(() => {
+    //     document.title = "Home";
+    // }, []);
 
     return (
         <div className="container">

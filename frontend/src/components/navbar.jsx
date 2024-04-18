@@ -18,7 +18,7 @@ function Navbar({ user }) {
       <nav className="navbar navbar-inverse">
       <div className="container-fluid">
         <div className="navbar-header">
-          <NavLink className="navbar-brand" to="/">Airport Taxis</NavLink>
+          <NavLink className="navbar-brand" onClick={() => setState({path:"home"})} to="/">Airport Taxis</NavLink>
         </div>
         <ul className="nav navbar-nav">
           <li className={check_path(state, "home")}><NavLink onClick={() => setState({path:"home"})} to="/">Home</NavLink></li>
