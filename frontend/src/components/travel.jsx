@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import TravelForm from "./forms/travelForm";
 
 
+
+
 function Travel(props) {
     const navigate = useNavigate();
     const url = "travel/";
@@ -15,7 +17,7 @@ function Travel(props) {
                 <TravelForm
                         navigate={navigate}
                         urlForm={url}
-                        toPath="/"
+                        // toPath="/"
                     />
             </div>
         );

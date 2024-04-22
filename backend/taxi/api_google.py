@@ -1,9 +1,8 @@
 import googlemaps
-import os
-import environ
-import datetime
+# import datetime
 from . import models
-# from asgiref.sync import async_to_sync, sync_to_async
+import environ
+
 
 env = environ.Env()
 environ.Env.read_env()
@@ -11,7 +10,7 @@ environ.Env.read_env()
 
 class ApiGoogle():
     def __init__(self) -> None:
-        key = os.environ['KEY']
+        key = env('GOOGEL_API_KEY')
         self.gmaps = googlemaps.Client(key=key)
         
 

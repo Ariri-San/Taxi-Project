@@ -15,6 +15,7 @@ import TravelToHistory from "./components/travel_to_history";
 import History from "./components/history";
 import SimpleMap from "./components/map"
 import Footer from "./components/footer";
+import Payment from "./components/paypal";
 
 
 class App extends Component {
@@ -51,6 +52,7 @@ class App extends Component {
             <Route path="/register" element={<Register />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/logout" element={<Logout />}></Route>
+            <Route path="/paypal" element={<Payment />}></Route>
           </Routes>
         </div>
         <Footer/>

@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from django.conf import settings
+from paypalrestsdk import notifications
 from . import serializers, models, api_google
 
 # Create your views here.
@@ -15,6 +17,15 @@ class TravelViewSet(ModelViewSet):
         if self.request.method == 'DELETE': 
             return [IsAdminUser()]
         return [IsAuthenticated()]
+    
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        if user.is_staff:
+            return models.Travel.objects.all()
+        else:
+            return models.Travel.objects.filter(user_id=user.id, payment_status="C").all()
     
     
     def update(self, request, *args, **kwargs):
@@ -36,13 +47,6 @@ class TravelViewSet(ModelViewSet):
             return serializers.TravelSerializer
     
 
-    def get_queryset(self):
-        user = self.request.user
-        
-        if user.is_staff:
-            return models.Travel.objects.all()
-        else:
-            return models.Travel.objects.filter(user_id=user.id).all()
     
     
     def get_serializer_context(self):
@@ -190,3 +194,73 @@ class CancelTravel(APIView):
         travel.save()
         
         return Response({"comment": "travel Canceled"}, status=status.HTTP_200_OK)
+
+
+class CompleteTravel(APIView):
+    def post(self, request):
+        if "HTTP_PAYPAL_TRANSMISSION_ID" not in request.META:
+            return Response({"error":"TRANSMISSION_ID"}, status=status.HTTP_400_BAD_REQUEST)
+
+        auth_algo = request.META['HTTP_PAYPAL_AUTH_ALGO']
+        cert_url = request.META['HTTP_PAYPAL_CERT_URL']
+        transmission_id = request.META['HTTP_PAYPAL_TRANSMISSION_ID']
+        transmission_sig = request.META['HTTP_PAYPAL_TRANSMISSION_SIG']
+        transmission_time = request.META['HTTP_PAYPAL_TRANSMISSION_TIME']
+        webhook_id = settings.PAYPAL_WEBHOOK_ID
+        event_body = request.body.decode(request.encoding or "utf-8")
+
+        valid = notifications.WebhookEvent.verify(
+            transmission_id=transmission_id,
+            timestamp=transmission_time,
+            webhook_id=webhook_id,
+            event_body=event_body,
+            cert_url=cert_url,
+            actual_sig=transmission_sig,
+            auth_algo=auth_algo,
+        )
+
+        if not valid:
+            return Response({"error":"Not Valid"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            travel = models.Travel.objects.get(id=transmission_id)
+            travel.payment_status = "C"
+            travel.save()
+        except:
+            return Response({"error":"Can Not Find Travel"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # webhook_event = json.loads(event_body)
+
+        # event_type = webhook_event["event_type"]
+
+        # CHECKOUT_ORDER_APPROVED = "CHECKOUT.ORDER.APPROVED"
+
+        # if event_type == CHECKOUT_ORDER_APPROVED:
+        #     customer_email = webhook_event["resource"]["payer"]["email_address"]
+        #     product_link = "https://learn.justdjango.com"
+        #     send_mail(
+        #         subject="Your access",
+        #         message=f"Thank you for purchasing my product. Here is the link: {product_link}",
+        #         from_email="your@email.com",
+        #         recipient_list=[customer_email]
+        #     )
+
+            # Accessing purchased items when selling multiple products
+            # webhook_event["resource"]["purchase_units"][0]["custom_id"]  # 'e-book-1234'
+        
+        return Response()
+
+class PriceTravel(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        serializer = serializers.GetTravelSerializer(data=request.data)
+        serializer.is_valid()
+        
+        travel_id = serializer.data["id"]
+        
+        # try:
+        travel = models.Travel.objects.get(user=request.user, id=travel_id)
+        return Response({"price": travel.price}, status=status.HTTP_200_OK)
+        # except:
+        #     return Response({"error":"Not Valid"}, status=status.HTTP_400_BAD_REQUEST)

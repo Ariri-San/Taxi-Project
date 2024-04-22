@@ -26,6 +26,7 @@ eventlet = "*"
 googlemaps = "*"
 phonenumbers = "*"
 django-phonenumber-field = "*"
+paypalrestsdk = "*"
 
 [dev-packages]
 autopep8 = "*"

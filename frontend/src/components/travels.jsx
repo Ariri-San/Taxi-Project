@@ -4,9 +4,9 @@ import {StaticGoogleMap, Marker} from 'react-static-google-map';
 import request from "../services/requestService";
 import getData from '../services/getData';
 import ShowData from '../base/showData';
-import config from "../config.json";
+// import config from "../config.json";
 
-const token_api = config.TokenApiMap;
+const token_api = process.env.REACT_APP_GOOGLE_API;
 
 
 

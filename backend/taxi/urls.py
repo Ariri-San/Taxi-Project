@@ -14,6 +14,8 @@ api_url = [
     path('find_distance/', views.FindDistance.as_view()),
     path('travel_to_history/', views.TravelToHistory.as_view()),
     path('cancel_travel/', views.CancelTravel.as_view()),
+    path('complete_travel/', views.CompleteTravel.as_view()),
+    path('price_travel/', views.PriceTravel.as_view()),
 ]
 
 urlpatterns = router.urls + api_url

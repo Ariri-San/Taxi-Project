@@ -1,9 +1,10 @@
 import React from "react";
 import GoogleMapReact from 'google-map-react';
 import {StaticGoogleMap, Marker, Path} from 'react-static-google-map';
-import config from "../config.json";
+// import config from "../config.json";
 
-const token_api = config.TokenApiMap;
+const token_api = process.env.REACT_APP_GOOGLE_API;
+
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 

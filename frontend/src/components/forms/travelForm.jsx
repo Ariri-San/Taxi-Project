@@ -4,9 +4,10 @@ import Joi from "joi-browser";
 import Form from "../../base/form.jsx";
 import request from "../../services/requestService.js";
 import {StaticGoogleMap, Marker} from 'react-static-google-map';
-import config from "../../config.json";
+import { toast } from "react-toastify";
 
-const token_api = config.TokenApiMap;
+const token_api = process.env.REACT_APP_GOOGLE_API;
+
 
 
 class TravelForm extends Form {
@@ -43,6 +44,57 @@ class TravelForm extends Form {
             .empty('')
             .iso()
             .label("Date Return"),
+    };
+
+
+    doSubmit = async (data) => {
+        if (this.props.onSubmit) return this.props.onSubmit(this.state);
+        else if ( this.onSubmit) return this.onSubmit(data);
+
+        try {
+            const response = request.saveObject(this.setFormData(data, new FormData()), this.props.urlForm, this.props.id);
+            
+            this.buttonDisabled = true;
+            const results = await response;
+
+            toast.promise(
+                response.then(() => new Promise(resolve => setTimeout(resolve, 300))),
+                {
+                    pending: 'Loading...',
+                    success: { render: `${results.data.id ? `Id: ${results.data.id}, ` : ""}message: ${results.statusText}`, autoClose: 1500 },
+                    error: `${results.statusText} 🤯`
+                }
+            );
+
+            // console.log(results);
+
+            await new Promise(resolve => setTimeout(resolve, 2000))
+            this.buttonDisabled = false;
+
+            return this.props.navigate("/paypal", {state: {id: results.data.id}});
+
+        } catch (error) {
+            if (error.response){
+                console.log(error)
+                if (error.response.data) {
+                    const errorData = this.addErrors(error.response.data, {}), newError = {}
+                    if (errorData["key"] === "0") toast.error(errorData["value"][0]);
+                    else newError[errorData["key"]] = errorData["value"];
+                    this.setState({ errors: newError });
+    
+                    // console.log(error);
+                    toast.error(error.response.statusText);
+                };
+    
+                await new Promise(resolve => setTimeout(resolve, 500))
+                this.buttonDisabled = false;
+                this.props.navigate();
+            }
+            else {
+                this.buttonDisabled = false;
+                return toast.error("server is ofline");
+            }
+        }
     };
 
 
