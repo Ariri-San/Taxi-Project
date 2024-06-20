@@ -139,7 +139,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['168.119.251.176', '127.0.0.1', 'localhost', 'welwynairporttaxiltd.com']
+ALLOWED_HOSTS = ['168.119.251.176', '127.0.0.1', 'localhost', 'taxi-project-f0uv.onrender.com']
 
 INTERNAL_IPS = [
     # ...
@@ -148,8 +148,7 @@ INTERNAL_IPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'https://welwynairporttaxiltd.com',
-    'http://welwynairporttaxiltd.com',
+    'https://taxi-project-uhw5.onrender.com',
     'http://168.119.251.176',
     'http://168.119.251.176:443',
     'http://168.119.251.176:3000',
