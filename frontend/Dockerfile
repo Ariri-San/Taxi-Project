@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 80
 
-CMD ["npm", "run", "biuld"]
+CMD ["npm", "run", "build"]
