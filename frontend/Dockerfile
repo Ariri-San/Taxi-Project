@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3000 
 
-CMD ["npm", "start"]
+CMD ["npm", "start", "--save-dev", "@babel/plugin-proposal-private-property-in-object", "--legacy-peer-deps"]
