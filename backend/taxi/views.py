@@ -196,6 +196,7 @@ class CancelTravel(APIView):
         return Response({"comment": "travel Canceled"}, status=status.HTTP_200_OK)
 
 
+"""
 class CompleteTravel(APIView):
     def post(self, request):
         if "HTTP_PAYPAL_TRANSMISSION_ID" not in request.META:
@@ -249,6 +250,8 @@ class CompleteTravel(APIView):
             # webhook_event["resource"]["purchase_units"][0]["custom_id"]  # 'e-book-1234'
         
         return Response()
+"""
+
 
 class PriceTravel(APIView):
     permission_classes = [IsAuthenticated]
