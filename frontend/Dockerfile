@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 80
 
-CMD ["npm", "start", "--save-dev", "@babel/plugin-proposal-private-property-in-object", "--legacy-peer-deps"]
+CMD ["npm", "biuld"]
