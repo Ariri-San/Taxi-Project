@@ -4,9 +4,9 @@ FROM node:20.11.1-alpine3.19
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
 COPY . .
 
-EXPOSE 0000
+EXPOSE 3000
 
-CMD ["npm", "run", "build"]
+CMD ["npm", "start"]
