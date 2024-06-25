@@ -4,7 +4,7 @@ FROM node:20.11.1-alpine3.19
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
+RUN npm install --save-dev
 COPY . .
 
 EXPOSE 3000
