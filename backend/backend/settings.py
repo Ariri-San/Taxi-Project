@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-e7pi&mg-=@g$c0313k*%cs&-qmp$(cy0^c%ynsp5#ts$lbwvdl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['shayan-projects.liara.run']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
