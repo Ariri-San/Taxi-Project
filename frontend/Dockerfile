@@ -9,4 +9,11 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+# Build for production.
+RUN npm run build
+
+# Install `serve` to run the application.
+RUN npm install -g serve
+
+CMD ["serve", "-s", "build"]
+# CMD ["npm", "start"]
