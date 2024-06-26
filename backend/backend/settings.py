@@ -34,6 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['168.119.251.176', '127.0.0.1', 'localhost', 'taxi-project-f0uv.onrender.com']
 
+CSRF_TRUSTED_ORIGINS = ["https://taxi-project-f0uv.onrender.com"]
 
 
 # Application definition
