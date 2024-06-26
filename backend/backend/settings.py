@@ -32,7 +32,8 @@ SECRET_KEY = 'django-insecure-e7pi&mg-=@g$c0313k*%cs&-qmp$(cy0^c%ynsp5#ts$lbwvdl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['168.119.251.176', '127.0.0.1', 'localhost', 'quizzical-shaw-nliqjvs8y.liara.run']
+
 
 
 # Application definition
@@ -144,7 +145,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['168.119.251.176', '127.0.0.1', 'localhost', 'taxi-project-f0uv.onrender.com']
 
 INTERNAL_IPS = [
     # ...
