@@ -1,5 +1,5 @@
 {
-    "BaseUrlLocal": "https://taxi-project-f0uv.onrender.com/",
-    "BaseUrl": "http://127.0.0.1:8000/",
+    "BaseUrlLocal": "http://127.0.0.1:8000/",
+    "BaseUrl": "https://taxi-project-f0uv.onrender.com/",
     "TokenName": "JWT"
 }
